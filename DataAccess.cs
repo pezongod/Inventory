@@ -12,6 +12,46 @@ namespace Inventory
     {
         private const string conString = "Server=(localdb)\\mssqllocaldb; Database=Inventory";
 
+        public List<Vara> GetAllVaraOfTyp(int id)
+        {
+            var sql = @"SELECT Vara.Id, Vara.Beskrivning, Vara.Pris, Vara.StatusId, Vara.DatumInköpt, Typ.Id, Typ.Namn, Subtyp.Id, Subtyp.Namn, Vara.BildId
+                        from Subtyp 
+                        join Vara on Subtyp.Id = Vara.SubTypId 
+                        join Typ on Subtyp.TypId = Typ.Id WHERE Typ.Id = @id";
+
+            using (SqlConnection connection = new SqlConnection(conString))
+            using (SqlCommand command = new SqlCommand(sql, connection))
+            {
+                connection.Open();
+
+                command.Parameters.Add(new SqlParameter("id", id));
+
+                SqlDataReader reader = command.ExecuteReader();
+
+                var list = new List<Vara>();
+
+                while (reader.Read())
+                {
+                    var vara = new Vara
+                    {
+                        Id = reader.GetSqlInt32(0).Value,
+                        Beskrivning = reader.GetSqlString(1).Value,
+                        Pris = reader.GetSqlInt32(2).Value,
+                        StatusId = reader.GetSqlInt32(3).Value,
+                        DatumInköpt = reader.GetDateTime(4).Date,
+                        TypId = reader.GetSqlInt32(5).Value,
+                        TypNamn = reader.GetSqlString(6).Value,
+                        SubTypId = reader.GetSqlInt32(7).Value,
+                        SubTypNamn = reader.GetSqlString(8).Value,
+                        BildId = reader.GetSqlInt32(9).Value
+                    };
+                    list.Add(vara);
+                }
+
+                return list;
+
+            }
+        }
         public List<Typ> GetAllTyps()
         {
             var sql = "SELECT * FROM Typ";
@@ -30,7 +70,7 @@ namespace Inventory
                     var bp = new Typ
                     {
                         Id = reader.GetSqlInt32(0).Value,
-                        Namn = reader.GetSqlString(1).Value
+                        Beskrivning = reader.GetSqlString(1).Value
                     };
                     list.Add(bp);
                 }

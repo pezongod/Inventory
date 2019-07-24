@@ -55,7 +55,7 @@ namespace Inventory
             List<Typ> types = _dataAccess.GetAllTyps();
             for (int i = 0; i < types.Count; i++)
             {
-                Console.WriteLine($"{i}. {types[i].Namn}");
+                Console.WriteLine($"{i}. {types[i].Beskrivning}");
             }
             Console.WriteLine();
             Console.WriteLine("Välj vilken typ av objekt du vill lägga till");
