@@ -13,6 +13,7 @@ namespace Inventory
             Console.WriteLine();
             Console.WriteLine("Vad vill du göra?");
             PrintMenu(PageMenu);
+            Console.WriteLine();
             return MakeChoices(PageMenu);
         }
 
@@ -35,6 +36,8 @@ namespace Inventory
         {
             Page x = Page.Main;
             var choice = Console.ReadKey();
+            Console.WriteLine();
+
             for (int i = 0; i < pageMenu.Count; i++)
             {
                 if (choice.KeyChar == alphabet[i])

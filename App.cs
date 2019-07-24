@@ -34,6 +34,7 @@ namespace Inventory
 
         public void MainPage()
         {
+            Console.Clear();
             string head = "Main Page";
             List<string> menu = new List<string> {"Lägg till ny vara", "Avsluta" };
             List<Page> menuTriggers = new List<Page> {Page.AddMerch, Page.Exit };
@@ -50,14 +51,44 @@ namespace Inventory
 
         private void AddMerch()
         {
+            while (_currentPage != Page.Main)
+            {
+
+            
             Console.Clear();
+            string head = "Lägg till vara";
+            List<string> menu = new List<string> { "Lägg till ny vara", "Gå tillbaka" };
+            List<Page> menuTriggers = new List<Page> { Page.NewMerch, Page.Main };
+            List<MenuItems> AddMerchPageMenu = new List<MenuItems>();
+            for (int i = 0; i < menu.Count; i++)
+            {
+                MenuItems x = new MenuItems(menu[i], menuTriggers[i]);
+                AddMerchPageMenu.Add(x);
+            }
+
+            _currentPage = _print.PrintPage(head, AddMerchPageMenu);
+            if (_currentPage == Page.NewMerch)
+            {
+                NewMerch();
+            }
+            }
+
+
+
+
+        }
+
+        private void NewMerch()
+        {
+            Console.Clear();
+
             Console.WriteLine("Lägg till beskrivning");
             string descrip = Console.ReadLine();
             Console.WriteLine("Lägg till typ id");
             int typid = int.Parse(Console.ReadLine());
-            Vara x = new Vara(descrip, typid);
-            _dataaccess.AddVara(x);
-            _currentPage = Page.Main;
+            Vara y = new Vara(descrip, typid);
+            _dataaccess.AddVara(y);
+            Console.ReadLine();
         }
     }
 }
