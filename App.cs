@@ -61,11 +61,11 @@ namespace Inventory
 
         private void Merch()
         {
-            while (_currentPage!=Page.Main)
+            while (_currentPage==Page.Merch)
             {
 
             Console.Clear();
-            string head = "Main Page";
+            string head = "Varor";
             List<string> menu = new List<string> { "Lägg till vara", "Titta på varor", "Gå tillbaka" };
             List<Page> menuTriggers = new List<Page> { Page.AddMerch, Page.CheckMerch, Page.Main };
             List<MenuItems> mainPageMenu = new List<MenuItems>();
@@ -107,15 +107,16 @@ namespace Inventory
                 int choosenSubType = _print.PrintSubTypes(choosenType);
                 _print.PrintAllItemsOfASubType(choosenSubType, valdaVaror);
             }
+            _currentPage = Page.Merch;
         }
         private void AddMerch()
         {
-            while (_currentPage != Page.Main)
+            while (_currentPage != Page.Merch)
             {
                 Console.Clear();
                 string head = "Lägg till vara";
                 List<string> menu = new List<string> { "Lägg till ny vara", "Gå tillbaka" };
-                List<Page> menuTriggers = new List<Page> { Page.NewMerch, Page.Main };
+                List<Page> menuTriggers = new List<Page> { Page.NewMerch, Page.Merch };
                 List<MenuItems> AddMerchPageMenu = new List<MenuItems>();
                 for (int i = 0; i < menu.Count; i++)
                 {
@@ -129,6 +130,9 @@ namespace Inventory
                 {
                     NewMerch();
                 }
+
+                
+
             }
         }
 

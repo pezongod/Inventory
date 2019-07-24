@@ -79,13 +79,21 @@ namespace Inventory
 
         internal List<Vara> PrintAllItemsOfAType(int choosenType)
         {
-           List<Vara> x = _dataAccess.GetAllVaraOfType(choosenType);
+           List<Vara> x = _dataAccess.GetAllVaraOfTyp(choosenType);
             foreach (Vara item in x)
             {
-                Console.WriteLine(item.Id.ToString().PadRight(10)+item.Typ.PadRight(10)+ item.SubTyp.PadRight(10)+ item.StatusId);
+                Console.WriteLine(item.Id.ToString().PadRight(10)+item.TypNamn.PadRight(10)+ item.SubTypNamn.PadRight(10)+ item.StatusId);
+                Console.WriteLine();
+
                 Console.WriteLine(item.Beskrivning);
+                Console.WriteLine();
+
                 Console.WriteLine(item.Pris.ToString().PadRight(8) + item.DatumInköpt);
+                Console.WriteLine();
+                Console.WriteLine();
+
             }
+            return x;
 
         }
 
@@ -102,10 +110,19 @@ namespace Inventory
 
             foreach (Vara item in subtypVara)
             {
-                Console.WriteLine(item.Id.ToString().PadRight(10) + item.Typ.PadRight(10) + item.SubTyp.PadRight(10) + item.StatusId);
+                Console.WriteLine(item.Id.ToString().PadRight(10) + item.TypNamn.PadRight(10) + item.SubTypNamn.PadRight(10) + item.StatusId);
+                Console.WriteLine();
                 Console.WriteLine(item.Beskrivning);
+                Console.WriteLine();
+
                 Console.WriteLine(item.Pris.ToString().PadRight(8) + item.DatumInköpt);
+                Console.WriteLine();
+                Console.WriteLine();
+
             }
+
+            Console.ReadLine();
+
         }
     }
 }

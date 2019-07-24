@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.Data.SqlTypes;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -43,15 +44,29 @@ namespace Inventory
                         TypNamn = reader.GetSqlString(6).Value,
                         SubTypId = reader.GetSqlInt32(7).Value,
                         SubTypNamn = reader.GetSqlString(8).Value,
-                        BildId = reader.GetSqlInt32(9).Value
+                        BildId = GetInt(reader.GetSqlInt32(9)) // 
                     };
-                    list.Add(vara);
+
+
                 }
 
                 return list;
 
             }
         }
+
+        private int? GetInt(SqlInt32 x)
+        {
+            if (x.IsNull)
+            {
+                return null;
+            }
+            else
+            {
+                return x.Value;
+            }
+        }
+
         public List<Typ> GetAllTyps()
         {
             var sql = "SELECT * FROM Typ";
@@ -82,7 +97,7 @@ namespace Inventory
 
         public List<SubTyp> GetAllSubTyps(int typId)
         {
-            var sql = "SELECT Namn FROM Subtyp WHERE TypID=@typId";
+            var sql = "SELECT Namn, Id FROM Subtyp WHERE TypID=@typId";
 
             using (SqlConnection connection = new SqlConnection(conString))
             using (SqlCommand command = new SqlCommand(sql, connection))
@@ -98,7 +113,8 @@ namespace Inventory
                 {
                     var bp = new SubTyp
                     {
-                        Namn = reader.GetSqlString(0).Value
+                        Namn = reader.GetSqlString(0).Value,
+                        Id = reader.GetSqlInt32(1).Value
                     };
                     list.Add(bp);
                 }
