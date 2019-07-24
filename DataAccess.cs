@@ -11,7 +11,7 @@ namespace Inventory
     {
         private const string conString = "Server=(localdb)\\mssqllocaldb; Database=Inventory";
 
-        public List<BlogPost> GetAllInventoriesBrief()
+        public List<Vara> GetAllVarorBrief()
         {
             var sql = @"SELECT [Id], [Author], [Title]
                         FROM BlogPost";
@@ -23,15 +23,15 @@ namespace Inventory
 
                 SqlDataReader reader = command.ExecuteReader();
 
-                var list = new List<BlogPost>();
+                var list = new List<Vara>();
 
                 while (reader.Read())
                 {
-                    var bp = new BlogPost
+                    var bp = new Vara
                     {
                         Id = reader.GetSqlInt32(0).Value,
-                        Author = reader.GetSqlString(1).Value,
-                        Title = reader.GetSqlString(2).Value
+                        SubTypId = reader.GetSqlInt32(1).Value,
+                        Pris = reader.GetSqlInt32(2).Value
                     };
                     list.Add(bp);
                 }
@@ -41,7 +41,7 @@ namespace Inventory
             }
         }
 
-        public BlogPost GetPostById(int postId)
+        public Vara GetPostById(int postId)
         {
             var sql = @"SELECT [Id], [Author], [Title]
                         FROM BlogPost 
@@ -69,6 +69,22 @@ namespace Inventory
 
                 return null;
 
+            }
+        }
+
+        public void AddVara(Vara vara)
+        {
+            var sql = "INSERT INTO Vara(Id, SubTypId, Beskrivning) VALUES(@Id, @SubTypId, @)";
+
+
+            using (SqlConnection connection = new SqlConnection(conString))
+            using (SqlCommand command = new SqlCommand(sql, connection))
+            {
+                connection.Open();
+                command.Parameters.Add(new SqlParameter("Id", vara.Id));
+                command.Parameters.Add(new SqlParameter("SubTypId", vara.SubTypId));
+                command.Parameters.Add(new SqlParameter("Beskrivning", vara.Beskrivning));
+                command.ExecuteNonQuery();
             }
         }
 
