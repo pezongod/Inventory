@@ -27,9 +27,12 @@ namespace Inventory
         }
         private void PrintMenu(List<MenuItems> PageMenu)
         {
-            foreach (MenuItems item in PageMenu)
+            for (int i = 0; i < length; i++)
             {
-                Console.WriteLine($"item.Name);
+
+            }
+            {
+                Console.WriteLine($"{alpha{item.Name}");
             }
         }
         private void MakeChoices(List<MenuItems> pageMenu)
