@@ -6,10 +6,31 @@ namespace Inventory
     internal class App
     {
         Print _print = new Print();
+        Page _currentPage = Page.Main;
         public void Run()
         {
-            throw new NotImplementedException();
+            while (true)
+            {
+
+            switch (_currentPage)
+            {
+                case Page.Main:
+                    MainPage();
+                    break;
+                case Page.AddMerch:
+                    AddMerch();
+                    break;
+                case Page.Exit:
+                    break;
+                default:
+                    break;
+            }
+            }
+
         }
+
+
+
         public void MainPage()
         {
             string head = "Main Page";
@@ -23,7 +44,14 @@ namespace Inventory
                 mainPageMenu.Add(x);
             }
 
-            _print.PrintPage(head, mainPageMenu);
+            _currentPage = _print.PrintPage(head, mainPageMenu);
+        }
+
+        private void AddMerch()
+        {
+            Console.Clear();
+            Console.WriteLine("ADD SOME MERCH");
+            Console.ReadLine();
         }
     }
 }

@@ -5,19 +5,16 @@ namespace Inventory
 {
     internal class Print
     {
-        public Print()
-        {
-        }
+        internal char[] alphabet = "abcdefghijklmnopqrstuvwxyz".ToCharArray();
 
-        internal void PrintPage(string head, List<MenuItems> PageMenu)
+        internal Page PrintPage(string head, List<MenuItems> PageMenu)
         {
             PrintHeader(head);
+            Console.WriteLine();
             Console.WriteLine("Vad vill du göra?");
             PrintMenu(PageMenu);
-            MakeChoices(PageMenu);
-            
+            return MakeChoices(PageMenu);
         }
-
 
         private void PrintHeader(string head)
         {
@@ -25,20 +22,27 @@ namespace Inventory
             Console.WriteLine(head);
             Console.ResetColor();
         }
+
         private void PrintMenu(List<MenuItems> PageMenu)
         {
-            for (int i = 0; i < length; i++)
+            for (int i = 0; i < PageMenu.Count; i++)
             {
-
-            }
-            {
-                Console.WriteLine($"{alpha{item.Name}");
+                Console.WriteLine($"{alphabet[i]}) {PageMenu[i].Name}");
             }
         }
-        private void MakeChoices(List<MenuItems> pageMenu)
+
+        private Page MakeChoices(List<MenuItems> pageMenu)
         {
-            throw new NotImplementedException();
+            Page x = Page.Main;
+            var choice = Console.ReadKey();
+            for (int i = 0; i < pageMenu.Count; i++)
+            {
+                if (choice.KeyChar == alphabet[i])
+                {
+                    x = pageMenu[i].Connection;
+                }
+            }
+            return x;
         }
-
     }
 }
