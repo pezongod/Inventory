@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Inventory.Classer;
+using System;
 using System.Collections.Generic;
 
 namespace Inventory
@@ -6,6 +7,7 @@ namespace Inventory
     internal class Print
     {
         internal char[] alphabet = "abcdefghijklmnopqrstuvwxyz".ToCharArray();
+        private DataAccess _dataAccess = new DataAccess();
 
         internal Page PrintPage(string head, List<MenuItems> PageMenu)
         {
@@ -57,15 +59,16 @@ namespace Inventory
             }
             Console.WriteLine();
             Console.WriteLine("Välj vilken typ av objekt du vill lägga till");
-            return int.Parse(Console.ReadLine());
+            int x = int.Parse(Console.ReadLine());
+            return types[x].Id;
         }
 
-        internal int PrintSubTypes()
+        internal int PrintSubTypes(int choosenType)
         {
-            List<SubTyp> subTypes = GetAllSubTyps(choosenType);
+            List<SubTyp> subTypes = _dataAccess.GetAllSubTyps(choosenType);
             for (int i = 0; i < subTypes.Count; i++)
             {
-                Console.WriteLine($"{i}. {subTypes[i].Name}");
+                Console.WriteLine($"{i}. {subTypes[i].Namn}");
 
             }
             Console.WriteLine();

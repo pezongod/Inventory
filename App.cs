@@ -77,7 +77,7 @@ namespace Inventory
             Console.Clear();
             int choosenType = _print.PrintTypes();
             Console.Clear();
-            int choosenSubType = _print.PrintSubTypes();
+            int choosenSubType = _print.PrintSubTypes(choosenType);
             Console.WriteLine("Lägg till beskrivning");
             string descrip = Console.ReadLine();
             Vara y = new Vara(descrip, choosenSubType);

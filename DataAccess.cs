@@ -48,6 +48,7 @@ namespace Inventory
             using (SqlCommand command = new SqlCommand(sql, connection))
             {
                 connection.Open();
+                command.Parameters.Add(new SqlParameter("typId", typId));
 
                 SqlDataReader reader = command.ExecuteReader();
 
@@ -57,7 +58,7 @@ namespace Inventory
                 {
                     var bp = new SubTyp
                     {
-                        Namn = reader.GetSqlString(1).Value
+                        Namn = reader.GetSqlString(0).Value
                     };
                     list.Add(bp);
                 }
