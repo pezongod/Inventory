@@ -1,26 +1,15 @@
-﻿----USE master
---CREATE DATABASE BlogPostDemo 
-----drop database BlogPostDemo
---USE BlogPostDemo
+﻿USE [Inventory]
+GO
 
---DROP TABLE IF EXISTS BlogPost
+/****** Object:  Table [dbo].[Blaha]    Script Date: 2019-07-24 11:12:31 ******/
+SET ANSI_NULLS ON
+GO
 
---CREATE TABLE BlogPost
---(
---	Id INT IDENTITY(1,1) PRIMARY KEY,
---    Title NVARCHAR(50) NULL,
---	Author NVARCHAR(50) NULL,
---	Content NVARCHAR(1000) NULL,
+SET QUOTED_IDENTIFIER ON
+GO
 
-
---)
-
---DROP TABLE Tags
-
-
-
---Create TABLE Tags (
---	Id INT IDENTITY(1,1) PRIMARY KEY,
---	PostId int,
---	Name NVARCHAR(10),
---	)
+CREATE TABLE [dbo].[Blaha](
+	[Id] [int] NULL,
+	[Blaha] [varchar](50) NULL
+) ON [PRIMARY]
+GO
