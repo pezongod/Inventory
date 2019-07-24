@@ -4,5 +4,6 @@
     AddMerch,
     NewMerch,
     Merch,
-    CheckMerch
+    CheckMerch,
+    CheckOnSubtypes
 }

@@ -77,7 +77,7 @@ namespace Inventory
 
         }
 
-        internal void PrintAllItemsOfAType(int choosenType)
+        internal List<Vara> PrintAllItemsOfAType(int choosenType)
         {
            List<Vara> x = _dataAccess.GetAllVaraOfType(choosenType);
             foreach (Vara item in x)
@@ -87,6 +87,25 @@ namespace Inventory
                 Console.WriteLine(item.Pris.ToString().PadRight(8) + item.DatumInköpt);
             }
 
+        }
+
+        internal void PrintAllItemsOfASubType(int choosenSubTyp, List<Vara> valdaVaror)
+        {
+            List<Vara> subtypVara = new List<Vara>();
+            foreach (Vara item in valdaVaror)
+            {
+                if (item.SubTypId == choosenSubTyp)
+                {
+                    subtypVara.Add(item);
+                }
+            }
+
+            foreach (Vara item in subtypVara)
+            {
+                Console.WriteLine(item.Id.ToString().PadRight(10) + item.Typ.PadRight(10) + item.SubTyp.PadRight(10) + item.StatusId);
+                Console.WriteLine(item.Beskrivning);
+                Console.WriteLine(item.Pris.ToString().PadRight(8) + item.DatumInköpt);
+            }
         }
     }
 }

@@ -61,6 +61,9 @@ namespace Inventory
 
         private void Merch()
         {
+            while (_currentPage!=Page.Main)
+            {
+
             Console.Clear();
             string head = "Main Page";
             List<string> menu = new List<string> { "Lägg till vara", "Titta på varor", "Gå tillbaka" };
@@ -75,8 +78,36 @@ namespace Inventory
             _print.PrintHeader(head);
 
             _currentPage = _print.PrintPage(mainPageMenu);
-        }
+            if (_currentPage==Page.CheckMerch)
+            {
+                CheckMerch();
+            }
+            }
 
+        }
+        private void CheckMerch()
+        {
+            Console.Clear();
+            int choosenType = _print.PrintTypes();
+            List<Vara> valdaVaror = _print.PrintAllItemsOfAType(choosenType);
+
+            List<string> menu = new List<string> { "Se subtyper", "Gå tillbaka" };
+            List<Page> menuTriggers = new List<Page> { Page.CheckOnSubtypes, Page.Merch };
+            List<MenuItems> CheckMerchPage = new List<MenuItems>();
+            for (int i = 0; i < menu.Count; i++)
+            {
+                MenuItems x = new MenuItems(menu[i], menuTriggers[i]);
+                CheckMerchPage.Add(x);
+            }
+
+
+            _currentPage = _print.PrintPage(CheckMerchPage);
+            if (_currentPage == Page.CheckOnSubtypes)
+            {
+                int choosenSubType = _print.PrintSubTypes(choosenType);
+                _print.PrintAllItemsOfASubType(choosenSubType, valdaVaror);
+            }
+        }
         private void AddMerch()
         {
             while (_currentPage != Page.Main)
@@ -114,13 +145,6 @@ namespace Inventory
             Console.ReadLine();
         }
 
-        private void CheckMerch()
-        {
-            Console.Clear();
-            int choosenType = _print.PrintTypes();
-            _print.PrintAllItemsOfAType(choosenType);
-            
 
-        }
     }
 }
