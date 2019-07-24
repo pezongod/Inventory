@@ -16,5 +16,11 @@ namespace Inventory
         public DateTime DatumInköpt { get; set; }
         public int StatusId { get; set; }
 
+        public Vara(string beskrivning, int typid)
+        {
+            Beskrivning = beskrivning;
+            SubTypId = typid;
+        }
+
     }
 }

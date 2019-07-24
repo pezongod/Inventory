@@ -7,6 +7,7 @@ namespace Inventory
     {
         Print _print = new Print();
         Page _currentPage = Page.Main;
+        DataAccess _dataaccess = new DataAccess();
         public void Run()
         {
             while (true)
@@ -50,8 +51,13 @@ namespace Inventory
         private void AddMerch()
         {
             Console.Clear();
-            Console.WriteLine("ADD SOME MERCH");
-            Console.ReadLine();
+            Console.WriteLine("Lägg till beskrivning");
+            string descrip = Console.ReadLine();
+            Console.WriteLine("Lägg till typ id");
+            int typid = int.Parse(Console.ReadLine());
+            Vara x = new Vara(descrip, typid);
+            _dataaccess.AddVara(x);
+            _currentPage = Page.Main;
         }
     }
 }
