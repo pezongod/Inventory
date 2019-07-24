@@ -57,11 +57,11 @@ namespace Inventory
 
                 if (reader.Read())
                 {
-                    var bp = new BlogPost
+                    var bp = new Vara
                     {
                         Id = reader.GetSqlInt32(0).Value,
-                        Author = reader.GetSqlString(1).Value,
-                        Title = reader.GetSqlString(2).Value
+                        SubTypId = reader.GetSqlInt32(1).Value,
+                        Pris = reader.GetSqlInt32(2).Value
                     };
                     return bp;
 
@@ -74,14 +74,13 @@ namespace Inventory
 
         public void AddVara(Vara vara)
         {
-            var sql = "INSERT INTO Vara(Id, SubTypId, Beskrivning) VALUES(@Id, @SubTypId, @)";
+            var sql = "INSERT INTO Vara(SubTypId, Beskrivning) VALUES(@SubTypId, @Beskrivning)";
 
 
             using (SqlConnection connection = new SqlConnection(conString))
             using (SqlCommand command = new SqlCommand(sql, connection))
             {
                 connection.Open();
-                command.Parameters.Add(new SqlParameter("Id", vara.Id));
                 command.Parameters.Add(new SqlParameter("SubTypId", vara.SubTypId));
                 command.Parameters.Add(new SqlParameter("Beskrivning", vara.Beskrivning));
                 command.ExecuteNonQuery();
