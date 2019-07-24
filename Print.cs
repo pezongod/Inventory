@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Inventory
 {
@@ -8,7 +9,7 @@ namespace Inventory
         {
         }
 
-        internal void PrintPage()
+        internal void PrintPage(List<MenuItems> mainPageMenu)
         {
             PrintHeader(title);
             PrintMenu();
