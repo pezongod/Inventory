@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Inventory.Classer;
+using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
@@ -11,35 +12,60 @@ namespace Inventory
     {
         private const string conString = "Server=(localdb)\\mssqllocaldb; Database=Inventory";
 
-        //public List<Vara> GetAllVarorBrief()
-        //{
-        //    var sql = @"SELECT [Id], [Author], [Title]
-        //                FROM BlogPost";
+        public List<Typ> GetAllTyps()
+        {
+            var sql = "SELECT * FROM Typ";
 
-        //    using (SqlConnection connection = new SqlConnection(conString))
-        //    using (SqlCommand command = new SqlCommand(sql, connection))
-        //    {
-        //        connection.Open();
+            using (SqlConnection connection = new SqlConnection(conString))
+            using (SqlCommand command = new SqlCommand(sql, connection))
+            {
+                connection.Open();
 
-        //        SqlDataReader reader = command.ExecuteReader();
+                SqlDataReader reader = command.ExecuteReader();
 
-        //        var list = new List<Vara>();
+                var list = new List<Typ>();
 
-        //        while (reader.Read())
-        //        {
-        //            var bp = new Vara
-        //            {
-        //                Id = reader.GetSqlInt32(0).Value,
-        //                SubTypId = reader.GetSqlInt32(1).Value,
-        //                Pris = reader.GetSqlInt32(2).Value
-        //            };
-        //            list.Add(bp);
-        //        }
+                while (reader.Read())
+                {
+                    var bp = new Typ
+                    {
+                        Id = reader.GetSqlInt32(0).Value,
+                        Namn = reader.GetSqlString(1).Value
+                    };
+                    list.Add(bp);
+                }
 
-        //        return list;
+                return list;
 
-        //    }
-        //}
+            }
+        }
+
+        public List<SubTyp> GetAllSubTyps(int typId)
+        {
+            var sql = "SELECT Namn FROM Subtyp WHERE TypID=@typId";
+
+            using (SqlConnection connection = new SqlConnection(conString))
+            using (SqlCommand command = new SqlCommand(sql, connection))
+            {
+                connection.Open();
+
+                SqlDataReader reader = command.ExecuteReader();
+
+                var list = new List<SubTyp>();
+
+                while (reader.Read())
+                {
+                    var bp = new SubTyp
+                    {
+                        Namn = reader.GetSqlString(1).Value
+                    };
+                    list.Add(bp);
+                }
+
+                return list;
+
+            }
+        }
 
         //public Vara GetPostById(int postId)
         //{
