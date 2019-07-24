@@ -47,5 +47,32 @@ namespace Inventory
             }
             return x;
         }
+
+        internal int PrintTypes()
+        {
+            List<Typ> types = _dataAccess.GetAllTyps();
+            for (int i = 0; i < types.Count; i++)
+            {
+                Console.WriteLine($"{i}. {types[i].Namn}");
+            }
+            Console.WriteLine();
+            Console.WriteLine("Välj vilken typ av objekt du vill lägga till");
+            return int.Parse(Console.ReadLine());
+        }
+
+        internal int PrintSubTypes()
+        {
+            List<SubTyp> subTypes = GetAllSubTyps(choosenType);
+            for (int i = 0; i < subTypes.Count; i++)
+            {
+                Console.WriteLine($"{i}. {subTypes[i].Name}");
+
+            }
+            Console.WriteLine();
+            Console.WriteLine("Välj vilken typ av objekt du vill lägga till");
+            int x = int.Parse(Console.ReadLine());
+            return subTypes[x].Id;
+
+        }
     }
 }
