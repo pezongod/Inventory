@@ -77,6 +77,7 @@ namespace Inventory
         internal int PrintSubTypes(int choosenType)
         {
             List<SubTyp> subTypes = _dataAccess.GetAllSubTyps(choosenType);
+
             for (int i = 0; i < subTypes.Count; i++)
             {
                 Console.WriteLine($"{i}. {subTypes[i].Namn}");
@@ -86,6 +87,8 @@ namespace Inventory
             int x = int.Parse(Console.ReadLine());
             return subTypes[x].Id;
         }
+
+
 
         internal Page PrintSubtypeItems(int choosenType, List<Vara> valdaVaror)
         {
@@ -100,20 +103,7 @@ namespace Inventory
         internal List<Vara> PrintAllItemsOfAType(int choosenType)
         {
             List<Vara> x = _dataAccess.GetAllVaraOfTyp(choosenType);
-            foreach (Vara item in x)
-            {
-                Console.WriteLine("----------------------------------------------------------------------------------------");
-                Console.WriteLine("Id".PadRight(10) + "Typ Namn".PadRight(10) + "Subtyp Namn".PadRight(10) + "StatusID");
-                Console.WriteLine(item.Id.ToString().PadRight(10) + item.TypNamn.PadRight(10) + item.SubTypNamn.PadRight(10) + item.StatusId);
-                Console.WriteLine();
-                Console.WriteLine("Beskrivning");
-                Console.WriteLine(item.Beskrivning);
-                Console.WriteLine();
-                Console.WriteLine("Pris".PadRight(8) + "Datum inköpt");
-                Console.WriteLine(item.Pris.ToString().PadRight(8) + item.DatumInköpt);
-                Console.WriteLine();
-                Console.WriteLine();
-            }
+            PrintVara(x);
             return x;
         }
 
@@ -128,8 +118,15 @@ namespace Inventory
                     subtypVara.Add(item);
                 }
             }
+            PrintVara(subtypVara);
+            
+        }
 
-            foreach (Vara item in subtypVara)
+        private void PrintVara(List<Vara> typVara)
+        {
+
+
+            foreach (Vara item in typVara)
             {
                 Console.WriteLine("----------------------------------------------------------------------------------------");
                 Console.WriteLine("Id".PadRight(10) + "Typ Namn".PadRight(10) + "Subtyp Namn".PadRight(10) + "StatusID");
