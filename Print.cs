@@ -80,37 +80,46 @@ namespace Inventory
             for (int i = 0; i < subTypes.Count; i++)
             {
                 Console.WriteLine($"{i}. {subTypes[i].Namn}");
-
             }
             Console.WriteLine();
             Console.WriteLine("Välj vilken typ");
             int x = int.Parse(Console.ReadLine());
             return subTypes[x].Id;
+        }
 
+        internal Page PrintSubtypeItems(int choosenType, List<Vara> valdaVaror)
+        {
+            Console.Clear();
+            int choosenSubType = PrintSubTypes(choosenType);
+            PrintAllItemsOfASubType(choosenSubType, valdaVaror);
+            List<string> menu = new List<string> { "Gå tillbaka" };
+            List<Page> menuTriggers = new List<Page> { Page.Merch };
+            return PrintPage(menu, menuTriggers);
         }
 
         internal List<Vara> PrintAllItemsOfAType(int choosenType)
         {
-           List<Vara> x = _dataAccess.GetAllVaraOfTyp(choosenType);
+            List<Vara> x = _dataAccess.GetAllVaraOfTyp(choosenType);
             foreach (Vara item in x)
             {
-                Console.WriteLine(item.Id.ToString().PadRight(10)+item.TypNamn.PadRight(10)+ item.SubTypNamn.PadRight(10)+ item.StatusId);
+                Console.WriteLine("----------------------------------------------------------------------------------------");
+                Console.WriteLine("Id".PadRight(10) + "Typ Namn".PadRight(10) + "Subtyp Namn".PadRight(10) + "StatusID");
+                Console.WriteLine(item.Id.ToString().PadRight(10) + item.TypNamn.PadRight(10) + item.SubTypNamn.PadRight(10) + item.StatusId);
                 Console.WriteLine();
-
+                Console.WriteLine("Beskrivning");
                 Console.WriteLine(item.Beskrivning);
                 Console.WriteLine();
-
+                Console.WriteLine("Pris".PadRight(8) + "Datum inköpt");
                 Console.WriteLine(item.Pris.ToString().PadRight(8) + item.DatumInköpt);
                 Console.WriteLine();
                 Console.WriteLine();
-
             }
             return x;
-
         }
 
         internal void PrintAllItemsOfASubType(int choosenSubTyp, List<Vara> valdaVaror)
         {
+            Console.Clear();
             List<Vara> subtypVara = new List<Vara>();
             foreach (Vara item in valdaVaror)
             {
@@ -122,19 +131,18 @@ namespace Inventory
 
             foreach (Vara item in subtypVara)
             {
+                Console.WriteLine("----------------------------------------------------------------------------------------");
+                Console.WriteLine("Id".PadRight(10) + "Typ Namn".PadRight(10) + "Subtyp Namn".PadRight(10) + "StatusID");
                 Console.WriteLine(item.Id.ToString().PadRight(10) + item.TypNamn.PadRight(10) + item.SubTypNamn.PadRight(10) + item.StatusId);
                 Console.WriteLine();
+                Console.WriteLine("Beskrivning");
                 Console.WriteLine(item.Beskrivning);
                 Console.WriteLine();
-
+                Console.WriteLine("Pris".PadRight(8) + "Datum inköpt");
                 Console.WriteLine(item.Pris.ToString().PadRight(8) + item.DatumInköpt);
                 Console.WriteLine();
                 Console.WriteLine();
-
             }
-
-            Console.ReadLine();
-
         }
     }
 }

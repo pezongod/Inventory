@@ -1,11 +1,7 @@
 ﻿using Inventory.Classer;
-using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Data.SqlTypes;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Inventory
 {
@@ -16,8 +12,8 @@ namespace Inventory
         public List<Vara> GetAllVaraOfTyp(int id)
         {
             var sql = @"SELECT Vara.Id, Vara.Beskrivning, Vara.Pris, Vara.StatusId, Vara.DatumInköpt, Typ.Id, Typ.Namn, Subtyp.Id, Subtyp.Namn, Vara.BildId
-                        from Subtyp 
-                        join Vara on Subtyp.Id = Vara.SubTypId 
+                        from Subtyp
+                        join Vara on Subtyp.Id = Vara.SubTypId
                         join Typ on Subtyp.TypId = Typ.Id WHERE Typ.Id = @id";
 
             using (SqlConnection connection = new SqlConnection(conString))
@@ -44,14 +40,13 @@ namespace Inventory
                         TypNamn = reader.GetSqlString(6).Value,
                         SubTypId = reader.GetSqlInt32(7).Value,
                         SubTypNamn = reader.GetSqlString(8).Value,
-                        BildId = GetInt(reader.GetSqlInt32(9)) // 
+                        BildId = GetInt(reader.GetSqlInt32(9)) //
                     };
 
-
+                    list.Add(vara);
                 }
 
                 return list;
-
             }
         }
 
@@ -91,7 +86,6 @@ namespace Inventory
                 }
 
                 return list;
-
             }
         }
 
@@ -120,7 +114,6 @@ namespace Inventory
                 }
 
                 return list;
-
             }
         }
 
@@ -159,7 +152,6 @@ namespace Inventory
         {
             var sql = "INSERT INTO Vara(SubTypId, Beskrivning) VALUES(@SubTypId, @Beskrivning)";
 
-
             using (SqlConnection connection = new SqlConnection(conString))
             using (SqlCommand command = new SqlCommand(sql, connection))
             {
@@ -169,6 +161,5 @@ namespace Inventory
                 command.ExecuteNonQuery();
             }
         }
-
     }
 }

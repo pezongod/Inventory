@@ -23,21 +23,12 @@ namespace Inventory
                         AddMerch();
                         break;
 
-                    case Page.Exit:
-                        break;
-
-                    case Page.NewMerch:
-                        break;
-
                     case Page.Merch:
                         Merch();
                         break;
 
                     case Page.CheckMerch:
                         CheckMerch();
-                        break;
-
-                    default:
                         break;
                 }
             }
@@ -84,8 +75,7 @@ namespace Inventory
             _currentPage = _print.PrintPage(menu, menuTriggers);
             if (_currentPage == Page.CheckOnSubtypes)
             {
-                int choosenSubType = _print.PrintSubTypes(choosenType);
-                _print.PrintAllItemsOfASubType(choosenSubType, valdaVaror);
+                _currentPage = _print.PrintSubtypeItems(choosenType, valdaVaror);
             }
             _currentPage = Page.Merch;
         }

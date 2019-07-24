@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Inventory
 {
@@ -21,7 +17,6 @@ namespace Inventory
         public DateTime? DatumInköpt { get; set; }
         public int? StatusId { get; set; }
 
-
         public Vara(string beskrivning, int typid)
         {
             Beskrivning = beskrivning;
@@ -30,8 +25,6 @@ namespace Inventory
 
         public Vara()
         {
-
         }
-
     }
 }
