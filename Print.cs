@@ -9,13 +9,25 @@ namespace Inventory
         internal char[] alphabet = "abcdefghijklmnopqrstuvwxyz".ToCharArray();
         private DataAccess _dataAccess = new DataAccess();
 
-        internal Page PrintPage(List<MenuItems> PageMenu)
+        internal Page PrintPage(List<string> menu, List<Page> menuTriggers)
         {
+            List<MenuItems> PageMenu = PrintPageSetup(menu, menuTriggers);
             Console.WriteLine();
             Console.WriteLine("Vad vill du göra?");
             PrintMenu(PageMenu);
             Console.WriteLine();
             return MakeChoices(PageMenu);
+        }
+
+        private List<MenuItems> PrintPageSetup(List<string> menu, List<Page> menuTriggers)
+        {
+            List<MenuItems> p = new List<MenuItems>();
+            for (int i = 0; i < menu.Count; i++)
+            {
+                MenuItems x = new MenuItems(menu[i], menuTriggers[i]);
+                p.Add(x);
+            }
+            return p;
         }
 
         internal void PrintHeader(string head)
