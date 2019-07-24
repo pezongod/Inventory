@@ -10,13 +10,13 @@ namespace Inventory
     {
         public int Id { get; set; }
         public int SubTypId { get; set; }
+
         public int Pris { get; set; }
         public string Beskrivning { get; set; }
         public int BildId { get; set; }
         public DateTime DatumInköpt { get; set; }
         public int StatusId { get; set; }
-        public List<string> Typ { get; set; }
-        public List<string> SubTyp { get; set; }
+
 
         public Vara(string beskrivning, int typid)
         {

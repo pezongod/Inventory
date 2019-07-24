@@ -9,9 +9,8 @@ namespace Inventory
         internal char[] alphabet = "abcdefghijklmnopqrstuvwxyz".ToCharArray();
         private DataAccess _dataAccess = new DataAccess();
 
-        internal Page PrintPage(string head, List<MenuItems> PageMenu)
+        internal Page PrintPage(List<MenuItems> PageMenu)
         {
-            PrintHeader(head);
             Console.WriteLine();
             Console.WriteLine("Vad vill du göra?");
             PrintMenu(PageMenu);
@@ -19,7 +18,7 @@ namespace Inventory
             return MakeChoices(PageMenu);
         }
 
-        private void PrintHeader(string head)
+        internal void PrintHeader(string head)
         {
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine(head);
@@ -58,7 +57,7 @@ namespace Inventory
                 Console.WriteLine($"{i}. {types[i].Namn}");
             }
             Console.WriteLine();
-            Console.WriteLine("Välj vilken typ av objekt du vill lägga till");
+            Console.WriteLine("Välj vilken typ");
             int x = int.Parse(Console.ReadLine());
             return types[x].Id;
         }
@@ -72,9 +71,21 @@ namespace Inventory
 
             }
             Console.WriteLine();
-            Console.WriteLine("Välj vilken typ av objekt du vill lägga till");
+            Console.WriteLine("Välj vilken typ");
             int x = int.Parse(Console.ReadLine());
             return subTypes[x].Id;
+
+        }
+
+        internal void PrintAllItemsOfAType(int choosenType)
+        {
+           List<Vara> x = _dataAccess.GetAllVaraOfType(choosenType);
+            foreach (Vara item in x)
+            {
+                Console.WriteLine(item.Id.ToString().PadRight(10)+item.Typ.PadRight(10)+ item.SubTyp.PadRight(10)+ item.StatusId);
+                Console.WriteLine(item.Beskrivning);
+                Console.WriteLine(item.Pris.ToString().PadRight(8) + item.DatumInköpt);
+            }
 
         }
     }

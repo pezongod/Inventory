@@ -2,5 +2,7 @@
 {
     Main, Exit,
     AddMerch,
-    NewMerch
+    NewMerch,
+    Merch,
+    CheckMerch
 }
