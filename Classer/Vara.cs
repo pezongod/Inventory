@@ -14,7 +14,7 @@ namespace Inventory
         public int? Pris { get; set; } = null;
         public string Beskrivning { get; set; } = null;
         public int? BildId { get; set; }
-        public DateTime? DatumInköpt { get; set; } = null;
+        public DateTime? DatumInköpt { get; set; }
         public int? StatusId { get; set; } = null;
         public string StatusNamn { get; set; } = null;
 
