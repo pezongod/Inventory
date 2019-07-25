@@ -130,7 +130,8 @@ namespace Inventory
                     var bp = new SubTyp
                     {
                         Namn = reader.GetSqlString(0).Value,
-                        Id = reader.GetSqlInt32(1).Value
+                        Id = reader.GetSqlInt32(1).Value,
+                        TypId = typId
                     };
                     list.Add(bp);
                 }

@@ -83,7 +83,9 @@ namespace Inventory
             var choose = "a";
             int x = 0;
             bool couldParse;
-            
+            IEntity returnType = type[0];
+
+
                 for (int i = 0; i < type.Count; i++)
                 {
                     Console.WriteLine($"{i}. {type[i].Namn}");
@@ -107,7 +109,8 @@ namespace Inventory
 
                 }
                 while (!couldParse) ;
-                }
+                return type[x];
+            }
             else
             {
                 if (varifran=="ejsub")
@@ -116,20 +119,42 @@ namespace Inventory
                     string typinput = Console.ReadLine();
                     int typid = _dataAccess.AddNewTyp(typinput);
                     Console.WriteLine("Skriv namn på subtypen");
+
                     string subtypinput = Console.ReadLine();
-                    _dataAccess.AddNewSubTyp(typid, subtypinput);
+                    Console.WriteLine();
+
+                    int subtypidt =_dataAccess.AddNewSubTyp(typid, subtypinput);
+                    List<IEntity> subTypes = _dataAccess.GetAllSubTyps(typid);
+                    foreach (var item in subTypes)
+                    {
+                        if (item.Id == subtypidt)
+                        {
+                            returnType = item;
+
+                        }
+                    }
                 }
                 else if (varifran=="sub")
                 {
                     Console.WriteLine("Skriv namn på subtypen");
+                    Console.WriteLine();
                     string subtypinput = Console.ReadLine();
-                    _dataAccess.AddNewSubTyp(type[1].TypId, subtypinput);
+                    Console.WriteLine();
+
+                    int typeidt= _dataAccess.AddNewSubTyp(type[0].TypId, subtypinput);
+                    List<IEntity> subTypes = _dataAccess.GetAllSubTyps(typeidt);
+                    foreach (var item in subTypes)
+                    {
+                        if (item.Id == typeidt)
+                        {
+                            returnType = item;
+
+                        }
+                    }
                 }
                 
             }
-            return type[x];
-                
-
+            return returnType;
         }
 
         internal Page PrintSubtypeItems(int choosenType, List<Vara> valdaVaror, Page _currentPage)
