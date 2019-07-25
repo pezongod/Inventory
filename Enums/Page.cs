@@ -5,5 +5,10 @@
     NewMerch,
     Merch,
     CheckMerch,
-    CheckOnSubtypes
+    CheckOnSubtypes,
+    AddDescrip,
+    AddStatus,
+    AddPrice,
+    AddDate,
+    Save
 }

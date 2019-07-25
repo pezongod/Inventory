@@ -42,7 +42,7 @@ namespace Inventory
             List<Page> menuTriggers = new List<Page> { Page.Merch, Page.Exit };
             _print.PrintHeader(head);
 
-            _currentPage = _print.PrintPage(menu, menuTriggers);
+            _currentPage = _print.PrintPage(menu, menuTriggers, "Vad vill du göra?");
         }
 
         private void Merch()
@@ -56,7 +56,7 @@ namespace Inventory
 
                 _print.PrintHeader(head);
 
-                _currentPage = _print.PrintPage(menu, menuTriggers);
+                _currentPage = _print.PrintPage(menu, menuTriggers, "Vad vill du göra?");
                 if (_currentPage == Page.CheckMerch)
                 {
                     CheckMerch();
@@ -72,7 +72,7 @@ namespace Inventory
 
             List<string> menu = new List<string> { "Se subtyper", "Gå tillbaka" };
             List<Page> menuTriggers = new List<Page> { Page.CheckOnSubtypes, Page.Merch };
-            _currentPage = _print.PrintPage(menu, menuTriggers);
+            _currentPage = _print.PrintPage(menu, menuTriggers, "Vad vill du göra?");
             if (_currentPage == Page.CheckOnSubtypes)
             {
                 _currentPage = _print.PrintSubtypeItems(choosenType, valdaVaror);
@@ -91,7 +91,7 @@ namespace Inventory
 
                 _print.PrintHeader(head);
 
-                _currentPage = _print.PrintPage(menu, menuTriggers);
+                _currentPage = _print.PrintPage(menu, menuTriggers, "Vad vill du göra?");
                 if (_currentPage == Page.NewMerch)
                 {
                     NewMerch();
@@ -105,10 +105,48 @@ namespace Inventory
             int choosenType = _print.PrintTypes();
             Console.Clear();
             int choosenSubType = _print.PrintSubTypes(choosenType);
-            Console.WriteLine("Lägg till beskrivning");
-            string descrip = Console.ReadLine();
-            Vara y = new Vara(descrip, choosenSubType);
-            _dataaccess.AddVara(y);
+            Vara varaAttLäggaTill = new Vara(choosenType, choosenSubType);
+            while (_currentPage!=Page.AddMerch)
+            {
+
+            
+
+            List<string> menu = new List<string> {
+            "Beskrivning",
+            "Status",
+            "Pris",
+            "Datum inköpt",
+            "Spara",
+            "Gå tillbaka"};
+            List<Page> menuTriggers = new List<Page> { Page.AddDescrip, Page.AddStatus, Page.AddPrice, Page.AddDate,Page.Save, Page.AddMerch };
+            _currentPage = _print.PrintPage(menu, menuTriggers, "Vad vill lägga till?");
+            switch (_currentPage)
+            {
+                case Page.AddMerch:
+                    break;
+                case Page.AddDescrip:
+
+                    Console.WriteLine("Ange beskrivning:");
+                        varaAttLäggaTill.Beskrivning = Console.ReadLine();
+                    break;
+                case Page.AddStatus:
+                        _print.PrintAllStatus();
+                        Console.WriteLine("Ange Status:");
+                        varaAttLäggaTill.Beskrivning = Console.ReadLine();
+                        break;
+                case Page.AddPrice:
+                    break;
+                case Page.AddDate:
+                    break;
+                case Page.Save:
+                    _dataaccess.AddVara(varaAttLäggaTill);
+                    break;
+                default:
+                    break;
+                }
+            }
+            Console.ReadLine();
+            
             Console.ReadLine();
         }
     }

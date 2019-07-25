@@ -9,11 +9,11 @@ namespace Inventory
         internal char[] alphabet = "abcdefghijklmnopqrstuvwxyz".ToCharArray();
         private DataAccess _dataAccess = new DataAccess();
 
-        internal Page PrintPage(List<string> menu, List<Page> menuTriggers)
+        internal Page PrintPage(List<string> menu, List<Page> menuTriggers, string question)
         {
             List<MenuItems> PageMenu = PrintPageSetup(menu, menuTriggers);
             Console.WriteLine();
-            Console.WriteLine("Vad vill du göra?");
+            Console.WriteLine(question);
             PrintMenu(PageMenu);
             Console.WriteLine();
             return MakeChoices(PageMenu);
@@ -92,7 +92,7 @@ namespace Inventory
             PrintAllItemsOfASubType(choosenSubType, valdaVaror);
             List<string> menu = new List<string> { "Gå tillbaka" };
             List<Page> menuTriggers = new List<Page> { Page.Merch };
-            return PrintPage(menu, menuTriggers);
+            return PrintPage(menu, menuTriggers, "Vad vill du göra");
         }
 
         internal List<Vara> PrintAllItemsOfAType(int choosenType)
@@ -116,12 +116,14 @@ namespace Inventory
             PrintVara(subtypVara);
         }
 
+
+
         private void PrintVara(List<Vara> typVara)
         {
             foreach (Vara item in typVara)
             {
                 Console.WriteLine("----------------------------------------------------------------------------------------");
-                Console.WriteLine("Id".PadRight(10) + "Typ Namn".PadRight(10) + "Subtyp Namn".PadRight(10) + "StatusID");
+                Console.WriteLine("Id".PadRight(10) + "Typ".PadRight(10) + "Subtyp".PadRight(10) + "Status");
                 Console.WriteLine(item.Id.ToString().PadRight(10) + item.TypNamn.PadRight(10) + item.SubTypNamn.PadRight(10) + item.StatusId);
                 Console.WriteLine();
                 Console.WriteLine("Beskrivning");
@@ -132,6 +134,12 @@ namespace Inventory
                 Console.WriteLine();
                 Console.WriteLine();
             }
+        }
+
+        internal void PrintAllStatus()
+        {
+            _dataaccess.GetAllStatus();
+            
         }
     }
 }
