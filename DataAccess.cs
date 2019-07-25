@@ -244,7 +244,7 @@ namespace Inventory
         //}
         public int AddNewTyp(string typNamn)
         {
-            int temp = 0;
+            int lastId = 0;
             var sql = @"INSERT INTO Typ(Namn)
                         OUTPUT INSERTED.ID
                          VALUES(@typNamn)";
@@ -255,16 +255,16 @@ namespace Inventory
             {
                 connection.Open();
                 command.Parameters.Add(new SqlParameter("typNamn", typNamn));
-                temp = (int)command.ExecuteScalar();
+                lastId = (int)command.ExecuteScalar();
             }
 
-            return temp;
+            return lastId;
 
         }
 
         public int AddNewSubTyp(int typId, string subTypName)
         {
-            int temp = 0;
+            int lastId = 0;
             var sql = @"INSERT INTO Subtyp(TypId, Namn) 
                         OUTPUT INSERTED.ID    
                         VALUES(@typId, @subTypNamn)";
@@ -275,12 +275,12 @@ namespace Inventory
                 connection.Open();
                 command.Parameters.Add(new SqlParameter("typId", typId));
                 command.Parameters.Add(new SqlParameter("subTypNamn", subTypName));
-                temp = (int)command.ExecuteScalar();
+                lastId = (int)command.ExecuteScalar();
 
 
             }
 
-            return temp;
+            return lastId;
         }
     }
 }
