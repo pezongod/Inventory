@@ -77,13 +77,21 @@ namespace Inventory
 
         private IEntity TypeChooser(List<IEntity> type)
         {
-            for (int i = 0; i < type.Count; i++)
+            int x;
+            bool couldParse;
+            do
+
             {
-                Console.WriteLine($"{i}. {type[i].Namn}");
+                for (int i = 0; i < type.Count; i++)
+                {
+                    Console.WriteLine($"{i}. {type[i].Namn}");
+                }
+                Console.WriteLine();
+                Console.WriteLine("Välj vilken");
+                couldParse = int.TryParse(Console.ReadLine(), out x);
+
             }
-            Console.WriteLine();
-            Console.WriteLine("Välj vilken");
-            int x = int.Parse(Console.ReadLine());
+            while (!couldParse);
             return type[x];
         }
 

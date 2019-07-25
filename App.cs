@@ -145,14 +145,14 @@ namespace Inventory
                 case Page.Save:
                     _dataaccess.AddVara(varaAttLäggaTill);
                         _currentPage = Page.AddMerch;
+                        Console.WriteLine("Varan blev tillagd");
+                        Console.ReadKey();
                     break;
                 default:
                     break;
                 }
             }
-            Console.ReadLine();
-            
-            Console.ReadLine();
+
         }
     }
 }
