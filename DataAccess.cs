@@ -1,4 +1,5 @@
 ﻿using Inventory.Classer;
+using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Data.SqlTypes;
@@ -11,10 +12,12 @@ namespace Inventory
 
         public List<Vara> GetAllVaraOfTyp(int id)
         {
-            var sql = @"SELECT Vara.Id, Vara.Beskrivning, Vara.Pris, Vara.StatusId, Vara.DatumInköpt, Typ.Id, Typ.Namn, Subtyp.Id, Subtyp.Namn, Vara.BildId
+            var sql = @"SELECT Vara.Id, Vara.Beskrivning, Vara.Pris, Status.Namn, Vara.DatumInköpt, Typ.Id, Typ.Namn, Subtyp.Id, Subtyp.Namn, Vara.BildId
                         from Subtyp
                         join Vara on Subtyp.Id = Vara.SubTypId
-                        join Typ on Subtyp.TypId = Typ.Id WHERE Typ.Id = @id";
+                        join Typ on Subtyp.TypId = Typ.Id
+                        join Status on Status.Id = Vara.StatusId
+                        WHERE Typ.Id = @id";
 
             using (SqlConnection connection = new SqlConnection(conString))
             using (SqlCommand command = new SqlCommand(sql, connection))
@@ -32,15 +35,15 @@ namespace Inventory
                     var vara = new Vara
                     {
                         Id = reader.GetSqlInt32(0).Value,
-                        Beskrivning = reader.GetSqlString(1).Value,
-                        Pris = reader.GetSqlInt32(2).Value,
-                        StatusId = reader.GetSqlInt32(3).Value,
-                        DatumInköpt = reader.GetDateTime(4).Date,
+                        Beskrivning = GetString(reader.GetSqlString(1)),
+                        Pris = GetInt(reader.GetSqlInt32(2)),
+                        StatusNamn = GetString(reader.GetSqlString(3)),
+                        DatumInköpt = GetDateTime(reader.GetDateTime(4)),
                         TypId = reader.GetSqlInt32(5).Value,
                         TypNamn = reader.GetSqlString(6).Value,
                         SubTypId = reader.GetSqlInt32(7).Value,
                         SubTypNamn = reader.GetSqlString(8).Value,
-                        BildId = GetInt(reader.GetSqlInt32(9)) //
+                        BildId = GetInt(reader.GetSqlInt32(9))
                     };
 
                     list.Add(vara);
@@ -51,6 +54,28 @@ namespace Inventory
         }
 
         private int? GetInt(SqlInt32 x)
+        {
+            if (x.IsNull)
+            {
+                return null;
+            }
+            else
+            {
+                return x.Value;
+            }
+        }
+        private string GetString(SqlString x)
+        {
+            if (x.IsNull)
+            {
+                return null;
+            }
+            else
+            {
+                return x.Value;
+            }
+        }
+        private DateTime? GetDateTime(SqlDateTime x)
         {
             if (x.IsNull)
             {
@@ -118,6 +143,33 @@ namespace Inventory
             }
         }
 
+        public List<IEntity> GetAllStatus()
+        {
+            var sql = "SELECT * FROM Status";
+
+            using (SqlConnection connection = new SqlConnection(conString))
+            using (SqlCommand command = new SqlCommand(sql, connection))
+            {
+                connection.Open();
+
+                SqlDataReader reader = command.ExecuteReader();
+
+                var list = new List<IEntity>();
+
+                while (reader.Read())
+                {
+                    var bp = new Status
+                    {
+                        Id = reader.GetSqlInt32(0).Value,
+                        Namn = reader.GetSqlString(1).Value                       
+                    };
+                    list.Add(bp);
+                }
+
+                return list;
+            }
+        }
+
         //public Vara GetPostById(int postId)
         //{
         //    var sql = @"SELECT [Id], [Author], [Title]
@@ -151,16 +203,46 @@ namespace Inventory
 
         public void AddVara(Vara vara)
         {
-            var sql = "INSERT INTO Vara(SubTypId, Beskrivning) VALUES(@SubTypId, @Beskrivning)";
+            var sql = "INSERT INTO Vara(SubTypId, Pris, Beskrivning, BildId, DatumInköpt, StatusId) VALUES(@SubTypId, @Pris, @Beskrivning, @BildId, @DatumInköpt, @StatusId)";
 
             using (SqlConnection connection = new SqlConnection(conString))
             using (SqlCommand command = new SqlCommand(sql, connection))
             {
                 connection.Open();
                 command.Parameters.Add(new SqlParameter("SubTypId", vara.SubTypId));
+                command.Parameters.Add(new SqlParameter("Pris", vara.Pris));
                 command.Parameters.Add(new SqlParameter("Beskrivning", vara.Beskrivning));
+                command.Parameters.Add(new SqlParameter("BildId", vara.BildId));
+                command.Parameters.Add(new SqlParameter("DatumInköpt", vara.DatumInköpt));
+                command.Parameters.Add(new SqlParameter("StatusId", vara.StatusId));
                 command.ExecuteNonQuery();
             }
         }
+
+        //public void AddTyp(Vara vara)
+        //{
+        //    var sql = "INSERT INTO Typ(Id) VALUES(@BildId)";
+
+        //    using (SqlConnection connection = new SqlConnection(conString))
+        //    using (SqlCommand command = new SqlCommand(sql, connection))
+        //    {
+        //        connection.Open();
+        //        command.Parameters.Add(new SqlParameter("BildId", vara.BildId));
+        //        command.ExecuteNonQuery();
+        //    }
+        //}
+
+        //public void AddSubTyp(Vara vara)
+        //{
+        //    var sql = "INSERT INTO Subtyp(Id) VALUES(@SubTypId)";
+
+        //    using (SqlConnection connection = new SqlConnection(conString))
+        //    using (SqlCommand command = new SqlCommand(sql, connection))
+        //    {
+        //        connection.Open();
+        //        command.Parameters.Add(new SqlParameter("SubTypId", vara.SubTypId));
+        //        command.ExecuteNonQuery();
+        //    }
+        //}
     }
 }

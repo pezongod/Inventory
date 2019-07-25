@@ -16,6 +16,7 @@ namespace Inventory
         public int? BildId { get; set; }
         public DateTime? DatumInköpt { get; set; }
         public int? StatusId { get; set; }
+        public string StatusNamn { get; set; }
 
         public Vara(string beskrivning, int typid)
         {
