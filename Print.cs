@@ -102,16 +102,21 @@ namespace Inventory
 
             if (choose == "a")
             {
-                do
-                {
+
+                    do
+                    {
+                        Console.Clear();
+                        Console.WriteLine();
                     Console.WriteLine("Välj vilken");
+                        Console.WriteLine();
                     couldParse = int.TryParse(Console.ReadLine(), out x);
                 }
                 while (!couldParse);
                 return type[x];
             }
             else if (choose == "b")
-            {
+                {
+                    Console.WriteLine();
                 if (varifran == "ejsub")
                 {
                     Console.WriteLine("Skriv in namn på typen");
@@ -135,16 +140,17 @@ namespace Inventory
                 }
                 else if (varifran == "sub")
                 {
-                    Console.WriteLine("Skriv namn på subtypen");
+
+                        Console.WriteLine("Skriv namn på subtypen");
                     Console.WriteLine();
                     string subtypinput = Console.ReadLine();
                     Console.WriteLine();
 
-                    int typeidt = _dataAccess.AddNewSubTyp(type[0].TypId, subtypinput);
-                    List<IEntity> subTypes = _dataAccess.GetAllSubTyps(typeidt);
+                    int subtypeidt = _dataAccess.AddNewSubTyp(type[0].TypId, subtypinput);
+                    List<IEntity> subTypes = _dataAccess.GetAllSubTyps(type[0].TypId);
                     foreach (var item in subTypes)
                     {
-                        if (item.Id == typeidt)
+                        if (item.Id == subtypeidt)
                         {
                             returnType = item;
                         }

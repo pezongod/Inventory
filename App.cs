@@ -112,6 +112,7 @@ namespace Inventory
             while (_currentPage!=Page.AddMerch)
             {
                 Console.Clear();
+                _print.PrintHeader("Lägger till ny vara....");
             List<string> menu = new List<string> {
             "Beskrivning",
             "Status",
@@ -139,7 +140,17 @@ namespace Inventory
                         
                         break;
                 case Page.AddPrice:
-                        varaAttLäggaTill.Pris = int.Parse(Console.ReadLine());
+                        int pris;
+                        bool canparse;
+                        do
+                        {
+                        canparse =int.TryParse(Console.ReadLine(), out pris);
+                        if (!canparse)
+                        {
+                            Console.WriteLine("Skriv en siffra");
+                        }
+                        } while (!canparse);
+                        varaAttLäggaTill.Pris = pris;
                     break;
                 case Page.AddDate:
                     break;
