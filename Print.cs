@@ -61,43 +61,59 @@ namespace Inventory
             return x;
         }
 
-        internal int PrintTypes()
+        internal int PrintTypes(Page _currentPage)
         {
             List<IEntity> types = _dataAccess.GetAllTyps();
-            var p = TypeChooser(types);
+            var p = TypeChooser(types, _currentPage);
             return p.Id;
         }
 
-        internal int PrintSubTypes(int choosenType)
+        internal int PrintSubTypes(int choosenType, Page _currentPage)
         {
             List<IEntity> subTypes = _dataAccess.GetAllSubTyps(choosenType);
-            var p = TypeChooser(subTypes);
+            var p = TypeChooser(subTypes, _currentPage);
             return p.Id;
         }
 
-        private IEntity TypeChooser(List<IEntity> type)
+        private IEntity TypeChooser(List<IEntity> type, Page _currentPage)
         {
-            int x;
+            var choose = "a";
+            int x = 0;
             bool couldParse;
-            do
-            {
+            
                 for (int i = 0; i < type.Count; i++)
                 {
                     Console.WriteLine($"{i}. {type[i].Namn}");
                 }
                 Console.WriteLine();
-                Console.WriteLine("Välj vilken");
-                couldParse = int.TryParse(Console.ReadLine(), out x);
 
-            }
-            while (!couldParse);
+                if (_currentPage == Page.NewMerch)
+                {
+                    Console.WriteLine("a) Välj typ");
+                    Console.WriteLine("b) Lägg till ny typ");
+                    choose = Console.ReadKey().KeyChar.ToString().ToLower();
+
+                }
+            
+                if (choose=="a")
+                {
+                do
+                {
+                    Console.WriteLine("Välj vilken");
+                    couldParse = int.TryParse(Console.ReadLine(), out x);
+
+                }
+                while (!couldParse) ;
+                }
             return type[x];
+                
+
         }
 
-        internal Page PrintSubtypeItems(int choosenType, List<Vara> valdaVaror)
+        internal Page PrintSubtypeItems(int choosenType, List<Vara> valdaVaror, Page _currentPage)
         {
             Console.Clear();
-            int choosenSubType = PrintSubTypes(choosenType);
+            int choosenSubType = PrintSubTypes(choosenType, _currentPage);
             PrintAllItemsOfASubType(choosenSubType, valdaVaror);
             List<string> menu = new List<string> { "Gå tillbaka" };
             List<Page> menuTriggers = new List<Page> { Page.Merch };
@@ -145,11 +161,11 @@ namespace Inventory
             }
         }
 
-        internal IEntity PrintAllStatus()
+        internal IEntity PrintAllStatus(Page _currentPage)
         {
 
             List<IEntity> x = _dataAccess.GetAllStatus();
-            var p = TypeChooser(x);
+            var p = TypeChooser(x, _currentPage);
             return p;
         }
     }

@@ -67,7 +67,7 @@ namespace Inventory
         private void CheckMerch()
         {
             Console.Clear();
-            int choosenType = _print.PrintTypes();
+            int choosenType = _print.PrintTypes(_currentPage);
             List<Vara> valdaVaror = _print.PrintAllItemsOfAType(choosenType);
 
             List<string> menu = new List<string> { "Se subtyper", "Gå tillbaka" };
@@ -75,7 +75,7 @@ namespace Inventory
             _currentPage = _print.PrintPage(menu, menuTriggers, "Vad vill du göra?");
             if (_currentPage == Page.CheckOnSubtypes)
             {
-                _currentPage = _print.PrintSubtypeItems(choosenType, valdaVaror);
+                _currentPage = _print.PrintSubtypeItems(choosenType, valdaVaror, _currentPage);
             }
             _currentPage = Page.Merch;
         }
@@ -102,9 +102,9 @@ namespace Inventory
         private void NewMerch()
         {
             Console.Clear();
-            int choosenType = _print.PrintTypes();
+            int choosenType = _print.PrintTypes(_currentPage);
             Console.Clear();
-            int choosenSubType = _print.PrintSubTypes(choosenType);
+            int choosenSubType = _print.PrintSubTypes(choosenType, _currentPage);
             Vara varaAttLäggaTill = new Vara();
             varaAttLäggaTill.TypId = choosenType;
             varaAttLäggaTill.SubTypId =choosenSubType;
@@ -133,7 +133,7 @@ namespace Inventory
                     break;
                 case Page.AddStatus:
                         Console.WriteLine("Ange Status:");
-                        var p = _print.PrintAllStatus();
+                        var p = _print.PrintAllStatus(_currentPage);
                         varaAttLäggaTill.StatusId = p.Id;
                         varaAttLäggaTill.StatusNamn = p.Namn;
                         
