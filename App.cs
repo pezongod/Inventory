@@ -139,6 +139,7 @@ namespace Inventory
                         
                         break;
                 case Page.AddPrice:
+                        varaAttLäggaTill.Pris = int.Parse(Console.ReadLine());
                     break;
                 case Page.AddDate:
                     break;
