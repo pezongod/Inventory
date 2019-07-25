@@ -38,7 +38,7 @@ namespace Inventory
                         Beskrivning = GetString(reader.GetSqlString(1)),
                         Pris = GetInt(reader.GetSqlInt32(2)),
                         StatusNamn = GetString(reader.GetSqlString(3)),
-                        DatumInköpt = GetDateTime(reader.GetDateTime(4)),
+                        DatumInköpt = reader.GetDateTime(4),
                         TypId = reader.GetSqlInt32(5).Value,
                         TypNamn = reader.GetSqlString(6).Value,
                         SubTypId = reader.GetSqlInt32(7).Value,
