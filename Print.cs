@@ -80,7 +80,6 @@ namespace Inventory
             int x;
             bool couldParse;
             do
-
             {
                 for (int i = 0; i < type.Count; i++)
                 {
