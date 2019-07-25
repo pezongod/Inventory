@@ -11,12 +11,12 @@ namespace Inventory
 
         public string SubTypNamn { get; set; }
 
-        public int? Pris { get; set; }
-        public string Beskrivning { get; set; }
+        public int? Pris { get; set; } = null;
+        public string Beskrivning { get; set; } = null;
         public int? BildId { get; set; }
-        public DateTime? DatumInköpt { get; set; }
-        public int? StatusId { get; set; }
-        public string StatusNamn { get; set; }
+        public DateTime? DatumInköpt { get; set; } = null;
+        public int? StatusId { get; set; } = null;
+        public string StatusNamn { get; set; } = null;
 
         public Vara(string beskrivning, int typid)
         {

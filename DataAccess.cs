@@ -210,12 +210,14 @@ namespace Inventory
             {
                 connection.Open();
                 command.Parameters.Add(new SqlParameter("SubTypId", vara.SubTypId));
-                command.Parameters.Add(new SqlParameter("Pris", vara.Pris));
-                command.Parameters.Add(new SqlParameter("Beskrivning", vara.Beskrivning));
-                command.Parameters.Add(new SqlParameter("BildId", vara.BildId));
-                command.Parameters.Add(new SqlParameter("DatumInköpt", vara.DatumInköpt));
-                command.Parameters.Add(new SqlParameter("StatusId", vara.StatusId));
+                command.Parameters.Add(new SqlParameter("Pris", (object)vara.Pris ?? DBNull.Value));
+                command.Parameters.Add(new SqlParameter("Beskrivning", (object)vara.Beskrivning ?? DBNull.Value));
+                command.Parameters.Add(new SqlParameter("BildId", (object)vara.BildId ?? DBNull.Value));
+                command.Parameters.Add(new SqlParameter("DatumInköpt", (object)vara.DatumInköpt ?? DBNull.Value));
+                command.Parameters.Add(new SqlParameter("StatusId", (object)vara.StatusId ?? DBNull.Value));
                 command.ExecuteNonQuery();
+
+               
             }
         }
 

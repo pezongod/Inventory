@@ -108,11 +108,10 @@ namespace Inventory
             Vara varaAttLäggaTill = new Vara();
             varaAttLäggaTill.TypId = choosenType;
             varaAttLäggaTill.SubTypId =choosenSubType;
+
             while (_currentPage!=Page.AddMerch)
             {
-
-            
-
+                Console.Clear();
             List<string> menu = new List<string> {
             "Beskrivning",
             "Status",
@@ -129,13 +128,14 @@ namespace Inventory
                 case Page.AddDescrip:
 
                     Console.WriteLine("Ange beskrivning:");
-                        varaAttLäggaTill.Beskrivning = Console.ReadLine();
+                        string temp = Console.ReadLine();
+                        varaAttLäggaTill.Beskrivning = temp;
                     break;
                 case Page.AddStatus:
                         Console.WriteLine("Ange Status:");
                         var p = _print.PrintAllStatus();
                         varaAttLäggaTill.StatusId = p.Id;
-                        varaAttLäggaTill.StausNamn = p.Namn;
+                        varaAttLäggaTill.StatusNamn = p.Namn;
                         
                         break;
                 case Page.AddPrice:
