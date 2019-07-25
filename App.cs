@@ -144,6 +144,7 @@ namespace Inventory
                     break;
                 case Page.Save:
                     _dataaccess.AddVara(varaAttLäggaTill);
+                        _currentPage = Page.AddMerch;
                     break;
                 default:
                     break;
