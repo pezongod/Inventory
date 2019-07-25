@@ -6,7 +6,7 @@ namespace Inventory
 {
     internal class Print
     {
-    internal string varifran = "ingen";
+        internal string varifran = "ingen";
         internal char[] alphabet = "abcdefghijklmnopqrstuvwxyz".ToCharArray();
         private DataAccess _dataAccess = new DataAccess();
 
@@ -83,78 +83,84 @@ namespace Inventory
             var choose = "a";
             int x = 0;
             bool couldParse;
-            IEntity returnType = type[0];
+            IEntity returnType = null;
+            while (true)
+            {
+                Console.Clear();
+            for (int i = 0; i < type.Count; i++)
+            {
+                Console.WriteLine($"{i}. {type[i].Namn}");
+            }
+            Console.WriteLine();
 
+            if (_currentPage == Page.NewMerch)
+            {
+                Console.WriteLine("a) Välj typ");
+                Console.WriteLine("b) Lägg till ny typ");
+                choose = Console.ReadKey().KeyChar.ToString().ToLower();
+            }
 
-                for (int i = 0; i < type.Count; i++)
-                {
-                    Console.WriteLine($"{i}. {type[i].Namn}");
-                }
-                Console.WriteLine();
-
-                if (_currentPage == Page.NewMerch)
-                {
-                    Console.WriteLine("a) Välj typ");
-                    Console.WriteLine("b) Lägg till ny typ");
-                    choose = Console.ReadKey().KeyChar.ToString().ToLower();
-
-                }
-            
-                if (choose=="a")
-                {
+            if (choose == "a")
+            {
                 do
                 {
                     Console.WriteLine("Välj vilken");
                     couldParse = int.TryParse(Console.ReadLine(), out x);
-
                 }
-                while (!couldParse) ;
+                while (!couldParse);
                 return type[x];
             }
-            else
+            else if (choose == "b")
             {
-                if (varifran=="ejsub")
+                if (varifran == "ejsub")
                 {
                     Console.WriteLine("Skriv in namn på typen");
                     string typinput = Console.ReadLine();
-                    int typid = _dataAccess.AddNewTyp(typinput);
+                    int typidt = _dataAccess.AddNewTyp(typinput);
                     Console.WriteLine("Skriv namn på subtypen");
 
                     string subtypinput = Console.ReadLine();
                     Console.WriteLine();
 
-                    int subtypidt =_dataAccess.AddNewSubTyp(typid, subtypinput);
-                    List<IEntity> subTypes = _dataAccess.GetAllSubTyps(typid);
-                    foreach (var item in subTypes)
+                    int subtypidt = _dataAccess.AddNewSubTyp(typidt, subtypinput);
+                    List<IEntity> types = _dataAccess.GetAllTyps();
+                    foreach (var item in types)
                     {
-                        if (item.Id == subtypidt)
+                        if (item.Id == typidt)
                         {
                             returnType = item;
-
                         }
                     }
+                    return returnType;
                 }
-                else if (varifran=="sub")
+                else if (varifran == "sub")
                 {
                     Console.WriteLine("Skriv namn på subtypen");
                     Console.WriteLine();
                     string subtypinput = Console.ReadLine();
                     Console.WriteLine();
 
-                    int typeidt= _dataAccess.AddNewSubTyp(type[0].TypId, subtypinput);
+                    int typeidt = _dataAccess.AddNewSubTyp(type[0].TypId, subtypinput);
                     List<IEntity> subTypes = _dataAccess.GetAllSubTyps(typeidt);
                     foreach (var item in subTypes)
                     {
                         if (item.Id == typeidt)
                         {
                             returnType = item;
-
                         }
                     }
+                    return returnType;
                 }
-                
+                return returnType;
+
             }
-            return returnType;
+            else
+            {
+                continue;
+            }
+
+            }
+
         }
 
         internal Page PrintSubtypeItems(int choosenType, List<Vara> valdaVaror, Page _currentPage)
@@ -188,8 +194,6 @@ namespace Inventory
             PrintVara(subtypVara);
         }
 
-
-
         private void PrintVara(List<Vara> typVara)
         {
             foreach (Vara item in typVara)
@@ -210,7 +214,6 @@ namespace Inventory
 
         internal IEntity PrintAllStatus(Page _currentPage)
         {
-
             List<IEntity> x = _dataAccess.GetAllStatus();
             var p = TypeChooser(x, _currentPage);
             return p;
