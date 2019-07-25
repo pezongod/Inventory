@@ -4,5 +4,6 @@
     {
         string Namn { get; }
         int Id { get; }
+        int TypId { get; }
     }
 }

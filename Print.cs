@@ -6,6 +6,7 @@ namespace Inventory
 {
     internal class Print
     {
+    internal string varifran = "ingen";
         internal char[] alphabet = "abcdefghijklmnopqrstuvwxyz".ToCharArray();
         private DataAccess _dataAccess = new DataAccess();
 
@@ -64,6 +65,7 @@ namespace Inventory
         internal int PrintTypes(Page _currentPage)
         {
             List<IEntity> types = _dataAccess.GetAllTyps();
+            varifran = "ejsub";
             var p = TypeChooser(types, _currentPage);
             return p.Id;
         }
@@ -71,6 +73,7 @@ namespace Inventory
         internal int PrintSubTypes(int choosenType, Page _currentPage)
         {
             List<IEntity> subTypes = _dataAccess.GetAllSubTyps(choosenType);
+            varifran = "sub";
             var p = TypeChooser(subTypes, _currentPage);
             return p.Id;
         }
@@ -105,6 +108,25 @@ namespace Inventory
                 }
                 while (!couldParse) ;
                 }
+            else
+            {
+                if (varifran=="ejsub")
+                {
+                    Console.WriteLine("Skriv in namn på typen");
+                    string typinput = Console.ReadLine();
+                    int typid = _dataAccess.AddNewTyp(typinput);
+                    Console.WriteLine("Skriv namn på subtypen");
+                    string subtypinput = Console.ReadLine();
+                    _dataAccess.AddNewSubTyp(typid, subtypinput);
+                }
+                else if (varifran=="sub")
+                {
+                    Console.WriteLine("Skriv namn på subtypen");
+                    string subtypinput = Console.ReadLine();
+                    _dataAccess.AddNewSubTyp(type[1].TypId, subtypinput);
+                }
+                
+            }
             return type[x];
                 
 
