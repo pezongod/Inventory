@@ -242,5 +242,35 @@ namespace Inventory
         //        command.ExecuteNonQuery();
         //    }
         //}
+        public void AddNewTyp(string typNamn)
+        {
+            var sql = "INSERT INTO Typ(Namn) VALUES(@typNamn)";
+
+            using (SqlConnection connection = new SqlConnection(conString))
+            using (SqlCommand command = new SqlCommand(sql, connection))
+            {
+                connection.Open();
+                command.Parameters.Add(new SqlParameter("typNamn", typNamn));
+                command.ExecuteNonQuery();
+
+
+            }
+        }
+
+        public void AddNewSubTyp(int typId, string subTypName)
+        {
+            var sql = "INSERT INTO Subtyp(TypId, Namn) VALUES(@typId, @subTypNamn)";
+
+            using (SqlConnection connection = new SqlConnection(conString))
+            using (SqlCommand command = new SqlCommand(sql, connection))
+            {
+                connection.Open();
+                command.Parameters.Add(new SqlParameter("typId", typId));
+                command.Parameters.Add(new SqlParameter("subTypNamn", subTypName));
+                command.ExecuteNonQuery();
+
+
+            }
+        }
     }
 }
