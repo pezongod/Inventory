@@ -12,7 +12,7 @@ namespace Inventory
 
         public List<Vara> GetAllVaraOfTyp(int id)
         {
-            var sql = @"SELECT Vara.Id, Vara.Beskrivning, Vara.Pris, Status.Namn, Vara.DatumInköpt, Typ.Id, Typ.Namn, Subtyp.Id, Subtyp.Namn, Vara.BildId
+            var sql = @"SELECT Vara.Id, Vara.Beskrivning, Vara.Pris, Status.Namn, DatumInköpt, Typ.Id, Typ.Namn, Subtyp.Id, Subtyp.Namn, Vara.BildId
                         from Subtyp
                         join Vara on Subtyp.Id = Vara.SubTypId
                         join Typ on Subtyp.TypId = Typ.Id
@@ -38,13 +38,14 @@ namespace Inventory
                         Beskrivning = GetString(reader.GetSqlString(1)),
                         Pris = GetInt(reader.GetSqlInt32(2)),
                         StatusNamn = GetString(reader.GetSqlString(3)),
-                        DatumInköpt = reader.GetDateTime(4),
                         TypId = reader.GetSqlInt32(5).Value,
                         TypNamn = reader.GetSqlString(6).Value,
                         SubTypId = reader.GetSqlInt32(7).Value,
                         SubTypNamn = reader.GetSqlString(8).Value,
                         BildId = GetInt(reader.GetSqlInt32(9))
                     };
+
+                    GetDateTime(reader, vara);
 
                     list.Add(vara);
                 }
@@ -75,16 +76,11 @@ namespace Inventory
                 return x.Value;
             }
         }
-        private DateTime? GetDateTime(SqlDateTime x)
+        private void GetDateTime(SqlDataReader reader, Vara vara)
         {
-            if (x.IsNull)
-            {
-                return null;
-            }
-            else
-            {
-                return x.Value;
-            }
+            var x = reader["DatumInköpt"];
+            if (!(x is DBNull))
+            vara.DatumInköpt = (DateTime)x;
         }
 
         public List<IEntity> GetAllTyps()
