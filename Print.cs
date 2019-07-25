@@ -63,32 +63,27 @@ namespace Inventory
 
         internal int PrintTypes()
         {
-            List<Typ> types = _dataAccess.GetAllTyps();
-            for (int i = 0; i < types.Count; i++)
-            {
-                Console.WriteLine($"{i}. {types[i].Beskrivning}");
-            }
-            Console.WriteLine();
-            Console.WriteLine("Välj vilken typ");
-            int x = int.Parse(Console.ReadLine());
-            return types[x].Id;
+            List<IEntity> types = _dataAccess.GetAllTyps();
+            return TypeChooser(types);
         }
 
         internal int PrintSubTypes(int choosenType)
         {
-            List<SubTyp> subTypes = _dataAccess.GetAllSubTyps(choosenType);
+            List<IEntity> subTypes = _dataAccess.GetAllSubTyps(choosenType);
+            return TypeChooser(subTypes);
+        }
 
-            for (int i = 0; i < subTypes.Count; i++)
+        private int TypeChooser(List<IEntity> type)
+        {
+            for (int i = 0; i < type.Count; i++)
             {
-                Console.WriteLine($"{i}. {subTypes[i].Namn}");
+                Console.WriteLine($"{i}. {type[i].Namn}");
             }
             Console.WriteLine();
             Console.WriteLine("Välj vilken typ");
             int x = int.Parse(Console.ReadLine());
-            return subTypes[x].Id;
+            return type[x].Id;
         }
-
-
 
         internal Page PrintSubtypeItems(int choosenType, List<Vara> valdaVaror)
         {
@@ -119,13 +114,10 @@ namespace Inventory
                 }
             }
             PrintVara(subtypVara);
-            
         }
 
         private void PrintVara(List<Vara> typVara)
         {
-
-
             foreach (Vara item in typVara)
             {
                 Console.WriteLine("----------------------------------------------------------------------------------------");

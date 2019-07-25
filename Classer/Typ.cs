@@ -1,8 +1,8 @@
 ﻿namespace Inventory.Classer
 {
-    public class Typ
+    public class Typ : IEntity
     {
         public int Id { get; set; }
-        public string Beskrivning { get; set; }
+        public string Namn { get; set; }
     }
 }

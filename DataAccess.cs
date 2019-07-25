@@ -62,7 +62,7 @@ namespace Inventory
             }
         }
 
-        public List<Typ> GetAllTyps()
+        public List<IEntity> GetAllTyps()
         {
             var sql = "SELECT * FROM Typ";
 
@@ -73,14 +73,14 @@ namespace Inventory
 
                 SqlDataReader reader = command.ExecuteReader();
 
-                var list = new List<Typ>();
+                var list = new List<IEntity>();
 
                 while (reader.Read())
                 {
                     var bp = new Typ
                     {
                         Id = reader.GetSqlInt32(0).Value,
-                        Beskrivning = reader.GetSqlString(1).Value
+                        Namn = reader.GetSqlString(1).Value
                     };
                     list.Add(bp);
                 }
@@ -89,7 +89,7 @@ namespace Inventory
             }
         }
 
-        public List<SubTyp> GetAllSubTyps(int typId)
+        public List<IEntity> GetAllSubTyps(int typId)
         {
             var sql = "SELECT Namn, Id FROM Subtyp WHERE TypID=@typId";
 
@@ -101,7 +101,7 @@ namespace Inventory
 
                 SqlDataReader reader = command.ExecuteReader();
 
-                var list = new List<SubTyp>();
+                var list = new List<IEntity>();
 
                 while (reader.Read())
                 {
