@@ -242,24 +242,32 @@ namespace Inventory
         //        command.ExecuteNonQuery();
         //    }
         //}
-        public void AddNewTyp(string typNamn)
+        public int AddNewTyp(string typNamn)
         {
-            var sql = "INSERT INTO Typ(Namn) VALUES(@typNamn)";
+            int lastId = 0;
+            var sql = @"INSERT INTO Typ(Namn)
+                        OUTPUT INSERTED.ID
+                         VALUES(@typNamn)";
+    
 
             using (SqlConnection connection = new SqlConnection(conString))
             using (SqlCommand command = new SqlCommand(sql, connection))
             {
                 connection.Open();
                 command.Parameters.Add(new SqlParameter("typNamn", typNamn));
-                command.ExecuteNonQuery();
-
-
+                lastId = (int)command.ExecuteScalar();
             }
+
+            return lastId;
+
         }
 
-        public void AddNewSubTyp(int typId, string subTypName)
+        public int AddNewSubTyp(int typId, string subTypName)
         {
-            var sql = "INSERT INTO Subtyp(TypId, Namn) VALUES(@typId, @subTypNamn)";
+            int lastId = 0;
+            var sql = @"INSERT INTO Subtyp(TypId, Namn) 
+                        OUTPUT INSERTED.ID    
+                        VALUES(@typId, @subTypNamn)";
 
             using (SqlConnection connection = new SqlConnection(conString))
             using (SqlCommand command = new SqlCommand(sql, connection))
@@ -267,10 +275,12 @@ namespace Inventory
                 connection.Open();
                 command.Parameters.Add(new SqlParameter("typId", typId));
                 command.Parameters.Add(new SqlParameter("subTypNamn", subTypName));
-                command.ExecuteNonQuery();
+                lastId = (int)command.ExecuteScalar();
 
 
             }
+
+            return lastId;
         }
     }
 }
