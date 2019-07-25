@@ -105,6 +105,7 @@ namespace Inventory
 
                 while (reader.Read())
                 {
+                    
                     var bp = new SubTyp
                     {
                         Namn = reader.GetSqlString(0).Value,

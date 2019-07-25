@@ -64,25 +64,27 @@ namespace Inventory
         internal int PrintTypes()
         {
             List<IEntity> types = _dataAccess.GetAllTyps();
-            return TypeChooser(types);
+            var p = TypeChooser(types);
+            return p.Id;
         }
 
         internal int PrintSubTypes(int choosenType)
         {
             List<IEntity> subTypes = _dataAccess.GetAllSubTyps(choosenType);
-            return TypeChooser(subTypes);
+            var p = TypeChooser(subTypes);
+            return p.Id;
         }
 
-        private int TypeChooser(List<IEntity> type)
+        private IEntity TypeChooser(List<IEntity> type)
         {
             for (int i = 0; i < type.Count; i++)
             {
                 Console.WriteLine($"{i}. {type[i].Namn}");
             }
             Console.WriteLine();
-            Console.WriteLine("Välj vilken typ");
+            Console.WriteLine("Välj vilken");
             int x = int.Parse(Console.ReadLine());
-            return type[x].Id;
+            return type[x];
         }
 
         internal Page PrintSubtypeItems(int choosenType, List<Vara> valdaVaror)
@@ -136,10 +138,12 @@ namespace Inventory
             }
         }
 
-        internal void PrintAllStatus()
+        internal IEntity PrintAllStatus()
         {
-            _dataaccess.GetAllStatus();
-            
+
+            List<IEntity> x = _dataAccess.GetAllStatus();
+            var p = TypeChooser(x);
+            return p;
         }
     }
 }

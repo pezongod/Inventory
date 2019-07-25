@@ -105,7 +105,9 @@ namespace Inventory
             int choosenType = _print.PrintTypes();
             Console.Clear();
             int choosenSubType = _print.PrintSubTypes(choosenType);
-            Vara varaAttLäggaTill = new Vara(choosenType, choosenSubType);
+            Vara varaAttLäggaTill = new Vara();
+            varaAttLäggaTill.TypId = choosenType;
+            varaAttLäggaTill.SubTypId =choosenSubType;
             while (_currentPage!=Page.AddMerch)
             {
 
@@ -130,9 +132,11 @@ namespace Inventory
                         varaAttLäggaTill.Beskrivning = Console.ReadLine();
                     break;
                 case Page.AddStatus:
-                        _print.PrintAllStatus();
                         Console.WriteLine("Ange Status:");
-                        varaAttLäggaTill.Beskrivning = Console.ReadLine();
+                        var p = _print.PrintAllStatus();
+                        varaAttLäggaTill.StatusId = p.Id;
+                        varaAttLäggaTill.StausNamn = p.Namn;
+                        
                         break;
                 case Page.AddPrice:
                     break;
