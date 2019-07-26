@@ -107,64 +107,81 @@ namespace Inventory
             int choosenSubType = _print.PrintSubTypes(choosenType, _currentPage);
             Vara varaAttLäggaTill = new Vara();
             varaAttLäggaTill.TypId = choosenType;
-            varaAttLäggaTill.SubTypId =choosenSubType;
+            varaAttLäggaTill.SubTypId = choosenSubType;
 
-            while (_currentPage!=Page.AddMerch)
+            while (_currentPage != Page.AddMerch)
             {
                 Console.Clear();
                 _print.PrintHeader("Lägger till ny vara....");
-            List<string> menu = new List<string> {
+                List<string> menu = new List<string> {
             "Beskrivning",
             "Status",
             "Pris",
             "Datum inköpt",
             "Spara",
             "Gå tillbaka"};
-            List<Page> menuTriggers = new List<Page> { Page.AddDescrip, Page.AddStatus, Page.AddPrice, Page.AddDate,Page.Save, Page.AddMerch };
-            _currentPage = _print.PrintPage(menu, menuTriggers, "Vad vill lägga till?");
-            switch (_currentPage)
-            {
-                case Page.AddMerch:
-                    break;
-                case Page.AddDescrip:
+                List<Page> menuTriggers = new List<Page> { Page.AddDescrip, Page.AddStatus, Page.AddPrice, Page.AddDate, Page.Save, Page.AddMerch };
+                _currentPage = _print.PrintPage(menu, menuTriggers, "Vad vill lägga till?");
+                switch (_currentPage)
+                {
+                    case Page.AddMerch:
+                        break;
 
-                    Console.WriteLine("Ange beskrivning:");
+                    case Page.AddDescrip:
+
+                        Console.WriteLine("Ange beskrivning:");
                         string temp = Console.ReadLine();
                         varaAttLäggaTill.Beskrivning = temp;
-                    break;
-                case Page.AddStatus:
+                        break;
+
+                    case Page.AddStatus:
                         Console.WriteLine("Ange Status:");
                         var p = _print.PrintAllStatus(_currentPage);
                         varaAttLäggaTill.StatusId = p.Id;
                         varaAttLäggaTill.StatusNamn = p.Namn;
-                        
+
                         break;
-                case Page.AddPrice:
+
+                    case Page.AddPrice:
                         int pris;
                         bool canparse;
                         do
                         {
-                        canparse =int.TryParse(Console.ReadLine(), out pris);
-                        if (!canparse)
-                        {
-                            Console.WriteLine("Skriv en siffra");
-                        }
+                            Console.WriteLine("Skriv in priset");
+                            canparse = int.TryParse(Console.ReadLine(), out pris);
+                            if (!canparse)
+                            {
+                                Console.WriteLine("Skriv en siffra");
+                            }
                         } while (!canparse);
                         varaAttLäggaTill.Pris = pris;
-                    break;
-                case Page.AddDate:
-                    break;
-                case Page.Save:
-                    _dataaccess.AddVara(varaAttLäggaTill);
+                        break;
+
+                    case Page.AddDate:
+                        bool parsedatetry;
+                        DateTime datum = '0000-00-00';
+                        while (!parsedatetry)
+                        {
+                            Console.Clear();
+
+                            Console.WriteLine("Skirv in datum i formatet (år-månad-dag) xxxx-xx-xx");
+                           
+                            parsedatetry = DateTime.TryParse(Console.ReadLine(), out datum);
+                        }
+                        varaAttLäggaTill.DatumInköpt = datum;
+                        break;
+
+                    case Page.Save:
+                        _dataaccess.AddVara(varaAttLäggaTill);
                         _currentPage = Page.AddMerch;
                         Console.WriteLine("Varan blev tillagd");
                         Console.ReadKey();
-                    break;
-                default:
-                    break;
+                        break;
+
+                    default:
+                        break;
                 }
             }
-
         }
     }
 }

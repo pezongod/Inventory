@@ -65,6 +65,7 @@ namespace Inventory
                 return x.Value;
             }
         }
+
         private string GetString(SqlString x)
         {
             if (x.IsNull)
@@ -76,11 +77,12 @@ namespace Inventory
                 return x.Value;
             }
         }
+
         private void GetDateTime(SqlDataReader reader, Vara vara)
         {
             var x = reader["DatumInköpt"];
             if (!(x is DBNull))
-            vara.DatumInköpt = (DateTime)x;
+                vara.DatumInköpt = (DateTime)x;
         }
 
         public List<IEntity> GetAllTyps()
@@ -126,7 +128,6 @@ namespace Inventory
 
                 while (reader.Read())
                 {
-                    
                     var bp = new SubTyp
                     {
                         Namn = reader.GetSqlString(0).Value,
@@ -158,7 +159,7 @@ namespace Inventory
                     var bp = new Status
                     {
                         Id = reader.GetSqlInt32(0).Value,
-                        Namn = reader.GetSqlString(1).Value                       
+                        Namn = reader.GetSqlString(1).Value
                     };
                     list.Add(bp);
                 }
@@ -213,8 +214,6 @@ namespace Inventory
                 command.Parameters.Add(new SqlParameter("DatumInköpt", (object)vara.DatumInköpt ?? DBNull.Value));
                 command.Parameters.Add(new SqlParameter("StatusId", (object)vara.StatusId ?? DBNull.Value));
                 command.ExecuteNonQuery();
-
-               
             }
         }
 
@@ -249,7 +248,6 @@ namespace Inventory
             var sql = @"INSERT INTO Typ(Namn)
                         OUTPUT INSERTED.ID
                          VALUES(@typNamn)";
-    
 
             using (SqlConnection connection = new SqlConnection(conString))
             using (SqlCommand command = new SqlCommand(sql, connection))
@@ -260,14 +258,13 @@ namespace Inventory
             }
 
             return lastId;
-
         }
 
         public int AddNewSubTyp(int typId, string subTypName)
         {
             int lastId = 0;
-            var sql = @"INSERT INTO Subtyp(TypId, Namn) 
-                        OUTPUT INSERTED.ID    
+            var sql = @"INSERT INTO Subtyp(TypId, Namn)
+                        OUTPUT INSERTED.ID
                         VALUES(@typId, @subTypNamn)";
 
             using (SqlConnection connection = new SqlConnection(conString))
@@ -277,8 +274,6 @@ namespace Inventory
                 command.Parameters.Add(new SqlParameter("typId", typId));
                 command.Parameters.Add(new SqlParameter("subTypNamn", subTypName));
                 lastId = (int)command.ExecuteScalar();
-
-
             }
 
             return lastId;

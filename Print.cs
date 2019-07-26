@@ -87,86 +87,86 @@ namespace Inventory
             while (true)
             {
                 Console.Clear();
-            for (int i = 0; i < type.Count; i++)
-            {
-                Console.WriteLine($"{i}. {type[i].Namn}");
-            }
-            Console.WriteLine();
+                for (int i = 0; i < type.Count; i++)
+                {
+                    Console.WriteLine($"{i}. {type[i].Namn}");
+                }
+                Console.WriteLine();
 
-            if (_currentPage == Page.NewMerch)
-            {
-                Console.WriteLine("a) Välj typ");
-                Console.WriteLine("b) Lägg till ny typ");
-                choose = Console.ReadKey().KeyChar.ToString().ToLower();
-            }
+                if (_currentPage == Page.NewMerch)
+                {
+                    Console.WriteLine("a) Välj typ");
+                    Console.WriteLine("b) Lägg till ny typ");
+                    choose = Console.ReadKey().KeyChar.ToString().ToLower();
+                }
 
-            if (choose == "a")
-            {
-
+                if (choose == "a")
+                {
                     do
                     {
                         Console.Clear();
-                        Console.WriteLine();
-                    Console.WriteLine("Välj vilken");
-                        Console.WriteLine();
-                    couldParse = int.TryParse(Console.ReadLine(), out x);
-                }
-                while (!couldParse);
-                return type[x];
-            }
-            else if (choose == "b")
-                {
-                    Console.WriteLine();
-                if (varifran == "ejsub")
-                {
-                    Console.WriteLine("Skriv in namn på typen");
-                    string typinput = Console.ReadLine();
-                    int typidt = _dataAccess.AddNewTyp(typinput);
-                    Console.WriteLine("Skriv namn på subtypen");
-
-                    string subtypinput = Console.ReadLine();
-                    Console.WriteLine();
-
-                    int subtypidt = _dataAccess.AddNewSubTyp(typidt, subtypinput);
-                    List<IEntity> types = _dataAccess.GetAllTyps();
-                    foreach (var item in types)
-                    {
-                        if (item.Id == typidt)
+                        for (int i = 0; i < type.Count; i++)
                         {
-                            returnType = item;
+                            Console.WriteLine($"{i}. {type[i].Namn}");
                         }
+                        Console.WriteLine();
+                        Console.WriteLine();
+                        Console.WriteLine("Välj vilken");
+                        Console.WriteLine();
+                        couldParse = int.TryParse(Console.ReadLine(), out x);
                     }
-                    return returnType;
+                    while (!couldParse);
+                    return type[x];
                 }
-                else if (varifran == "sub")
+                else if (choose == "b")
                 {
-
+                    Console.WriteLine();
+                    if (varifran == "ejsub")
+                    {
+                        Console.WriteLine("Skriv in namn på typen");
+                        string typinput = Console.ReadLine();
+                        int typidt = _dataAccess.AddNewTyp(typinput);
                         Console.WriteLine("Skriv namn på subtypen");
-                    Console.WriteLine();
-                    string subtypinput = Console.ReadLine();
-                    Console.WriteLine();
 
-                    int subtypeidt = _dataAccess.AddNewSubTyp(type[0].TypId, subtypinput);
-                    List<IEntity> subTypes = _dataAccess.GetAllSubTyps(type[0].TypId);
-                    foreach (var item in subTypes)
-                    {
-                        if (item.Id == subtypeidt)
+                        string subtypinput = Console.ReadLine();
+                        Console.WriteLine();
+
+                        int subtypidt = _dataAccess.AddNewSubTyp(typidt, subtypinput);
+                        List<IEntity> types = _dataAccess.GetAllTyps();
+                        foreach (var item in types)
                         {
-                            returnType = item;
+                            if (item.Id == typidt)
+                            {
+                                returnType = item;
+                            }
                         }
+                        return returnType;
+                    }
+                    else if (varifran == "sub")
+                    {
+                        Console.WriteLine("Skriv namn på subtypen");
+                        Console.WriteLine();
+                        string subtypinput = Console.ReadLine();
+                        Console.WriteLine();
+
+                        int subtypeidt = _dataAccess.AddNewSubTyp(type[0].TypId, subtypinput);
+                        List<IEntity> subTypes = _dataAccess.GetAllSubTyps(type[0].TypId);
+                        foreach (var item in subTypes)
+                        {
+                            if (item.Id == subtypeidt)
+                            {
+                                returnType = item;
+                            }
+                        }
+                        return returnType;
                     }
                     return returnType;
                 }
-                return returnType;
-
+                else
+                {
+                    continue;
+                }
             }
-            else
-            {
-                continue;
-            }
-
-            }
-
         }
 
         internal Page PrintSubtypeItems(int choosenType, List<Vara> valdaVaror, Page _currentPage)
