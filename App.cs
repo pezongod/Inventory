@@ -187,5 +187,20 @@ namespace Inventory
                 }
             }
         }
+        public static void PaintVaror()
+        {
+
+            System.Console.WriteLine(@"X              X        XX                                             XXXX      ");
+            System.Console.WriteLine(@"XX             X        X XX          XXXXX           XXXXXXX         X    XX    ");
+            System.Console.WriteLine(@" XX            X       X    X         XX  X         XX X     XX       X      X   ");
+            System.Console.WriteLine(@"  XXX         X       XX     X        X   X         XXX        XX     X     X    ");
+            System.Console.WriteLine(@"    XX        X      XXXXX XXX        X   X         XX          X     X XXXX     ");
+            System.Console.WriteLine(@"     XX      X       X        X       X XX         XX           X     XXX        ");
+            System.Console.WriteLine(@"      XX            XX        X       XXXX         X            X     X XXX      ");
+            System.Console.WriteLine(@"       XX X         X         X       X    XXX     XX         XX      X   XX     ");
+            System.Console.WriteLine(@"         XX        XX         X       X      XX     XXX     XXX       X     XX   ");
+            System.Console.WriteLine(@"                                      X       X        XXXXXX         X      XXX ");
+
+        }
     }
 }

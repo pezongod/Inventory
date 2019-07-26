@@ -4,8 +4,13 @@
     {
         private static void Main(string[] args)
         {
-            App app = new App();
-            app.Run();
+            PaintVaror();
+            //App app = new App();
+            //app.Run();        
+      
+
         }
+        
+       
     }
 }
