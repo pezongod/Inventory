@@ -66,7 +66,7 @@ namespace Inventory
         {
             List<IEntity> types = _dataAccess.GetAllTyps();
             varifran = "ejsub";
-            var p = TypeChooser(types, _currentPage);
+            var p = TypeChooser(types, _currentPage,1);
             return p.Id;
         }
 
@@ -74,11 +74,11 @@ namespace Inventory
         {
             List<IEntity> subTypes = _dataAccess.GetAllSubTyps(choosenType);
             varifran = "sub";
-            var p = TypeChooser(subTypes, _currentPage);
+            var p = TypeChooser(subTypes, _currentPage, choosenType);
             return p.Id;
         }
 
-        private IEntity TypeChooser(List<IEntity> type, Page _currentPage)
+        private IEntity TypeChooser(List<IEntity> type, Page _currentPage, int choosenType)
         {
             var choose = "a";
             int x = 0;
@@ -127,7 +127,6 @@ namespace Inventory
                         string typinput = Console.ReadLine();
                         int typidt = _dataAccess.AddNewTyp(typinput);
                         Console.WriteLine("Skriv namn på subtypen");
-
                         string subtypinput = Console.ReadLine();
                         Console.WriteLine();
 
@@ -149,8 +148,8 @@ namespace Inventory
                         string subtypinput = Console.ReadLine();
                         Console.WriteLine();
 
-                        int subtypeidt = _dataAccess.AddNewSubTyp(type[0].TypId, subtypinput);
-                        List<IEntity> subTypes = _dataAccess.GetAllSubTyps(type[0].TypId);
+                        int subtypeidt = _dataAccess.AddNewSubTyp(choosenType, subtypinput);
+                        List<IEntity> subTypes = _dataAccess.GetAllSubTyps(choosenType);
                         foreach (var item in subTypes)
                         {
                             if (item.Id == subtypeidt)
@@ -221,7 +220,7 @@ namespace Inventory
         internal IEntity PrintAllStatus(Page _currentPage)
         {
             List<IEntity> x = _dataAccess.GetAllStatus();
-            var p = TypeChooser(x, _currentPage);
+            var p = TypeChooser(x, _currentPage, 1);
             return p;
         }
     }
