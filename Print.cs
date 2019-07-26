@@ -40,10 +40,12 @@ namespace Inventory
 
         private void PrintMenu(List<MenuItems> PageMenu)
         {
+                        Console.ForegroundColor = ConsoleColor.DarkGray;
             for (int i = 0; i < PageMenu.Count; i++)
             {
                 Console.WriteLine($"{alphabet[i]}) {PageMenu[i].Name}");
             }
+            Console.ResetColor();
         }
 
         private Page MakeChoices(List<MenuItems> pageMenu)
@@ -95,8 +97,10 @@ namespace Inventory
 
                 if (_currentPage == Page.NewMerch)
                 {
+                    Console.ForegroundColor = ConsoleColor.DarkGray;
                     Console.WriteLine("a) Välj typ");
                     Console.WriteLine("b) Lägg till ny typ");
+                    Console.ResetColor();
                     choose = Console.ReadKey().KeyChar.ToString().ToLower();
                 }
 
@@ -111,8 +115,10 @@ namespace Inventory
                         }
                         Console.WriteLine();
                         Console.WriteLine();
+                        Console.ForegroundColor = ConsoleColor.DarkGray;
                         Console.WriteLine("Välj vilken");
                         Console.WriteLine();
+                        Console.ResetColor();
                         couldParse = int.TryParse(Console.ReadLine(), out x);
                     }
                     while (!couldParse);
@@ -123,10 +129,14 @@ namespace Inventory
                     Console.WriteLine();
                     if (varifran == "ejsub")
                     {
+                        Console.ForegroundColor = ConsoleColor.DarkGray;
                         Console.WriteLine("Skriv in namn på typen");
+                        Console.ResetColor();
                         string typinput = Console.ReadLine();
                         int typidt = _dataAccess.AddNewTyp(typinput);
+                        Console.ForegroundColor = ConsoleColor.DarkGray;
                         Console.WriteLine("Skriv namn på subtypen");
+                        Console.ResetColor();
                         string subtypinput = Console.ReadLine();
                         Console.WriteLine();
 
@@ -143,8 +153,10 @@ namespace Inventory
                     }
                     else if (varifran == "sub")
                     {
+                        Console.ForegroundColor = ConsoleColor.DarkGray;
                         Console.WriteLine("Skriv namn på subtypen");
                         Console.WriteLine();
+                        Console.ResetColor();
                         string subtypinput = Console.ReadLine();
                         Console.WriteLine();
 
@@ -203,14 +215,20 @@ namespace Inventory
         {
             foreach (Vara item in typVara)
             {
+                Console.ForegroundColor = ConsoleColor.DarkCyan;
                 Console.WriteLine("----------------------------------------------------------------------------------------");
                 Console.WriteLine("Id".PadRight(10) + "Typ".PadRight(10) + "Subtyp".PadRight(10) + "Status");
+                Console.ForegroundColor = ConsoleColor.White;
                 Console.WriteLine(item.Id.ToString().PadRight(10) + item.TypNamn.PadRight(10) + item.SubTypNamn.PadRight(10) + item.StatusId);
                 Console.WriteLine();
+                Console.ForegroundColor = ConsoleColor.DarkCyan;
                 Console.WriteLine("Beskrivning");
+                Console.ForegroundColor = ConsoleColor.White;
                 Console.WriteLine(item.Beskrivning);
+                Console.ForegroundColor = ConsoleColor.DarkCyan;
                 Console.WriteLine();
                 Console.WriteLine("Pris".PadRight(8) + "Datum inköpt");
+                Console.ForegroundColor = ConsoleColor.White;
                 Console.WriteLine(item.Pris.ToString().PadRight(8) + item.DatumInköpt);
                 Console.WriteLine();
                 Console.WriteLine();

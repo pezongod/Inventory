@@ -41,12 +41,29 @@ namespace Inventory
         public void MainPage()
         {
             Console.Clear();
-            string head = "Main Page";
+            //string head = "Main Page";
+            WriteMain();
             List<string> menu = new List<string> { "Varor", "Avsluta" };
             List<Page> menuTriggers = new List<Page> { Page.Merch, Page.Exit };
-            _print.PrintHeader(head);
+            //_print.PrintHeader(head);
 
             _currentPage = _print.PrintPage(menu, menuTriggers, "Vad vill du göra?");
+        }
+
+        private void WriteMain()
+        {
+            Console.WriteLine("XX");
+            Console.WriteLine("XXXX        XXXX");
+            Console.WriteLine("XXXXX     XXXXXX");
+            Console.WriteLine("XXX XX   XXX XXX        XXX        XX  X        XX");
+            Console.WriteLine("XX   XX XX   XXX      XXX XXXX     XX  XXX      XX");
+            Console.WriteLine("XX    XXX    XXX     XX     XXX    XX  XXXX     XX");
+            Console.WriteLine("XX     X     XXX    XX        X    XX  XX XX    XX");
+            Console.WriteLine("XXX          XXX    XXXXXXXXXXXX   XX  XX  XX   XX");
+            Console.WriteLine("XXX          XXX    XXX      XXX   XX  XX   XX  XXX");
+            Console.WriteLine("XXX          XXX    XXX      XXX   XX  XX    XX XXX");
+            Console.WriteLine("XX           XXX    XXX       XX   XX  XX     XXXXX");
+            Console.WriteLine("                              XX   XX  XX      XXX");
         }
 
         private void Merch()
@@ -71,6 +88,7 @@ namespace Inventory
         private void CheckMerch()
         {
             Console.Clear();
+
             int choosenType = _print.PrintTypes(_currentPage);
             List<Vara> valdaVaror = _print.PrintAllItemsOfAType(choosenType);
 
@@ -89,6 +107,10 @@ namespace Inventory
             while (_currentPage != Page.Merch)
             {
                 Console.Clear();
+
+                DrawHeart();
+
+
                 string head = "Lägg till vara";
                 List<string> menu = new List<string> { "Lägg till ny vara", "Gå tillbaka" };
                 List<Page> menuTriggers = new List<Page> { Page.NewMerch, Page.Merch };
@@ -101,6 +123,21 @@ namespace Inventory
                     NewMerch();
                 }
             }
+        }
+
+        private void DrawHeart()
+        {
+Console.WriteLine("  XXXXXX             ");
+Console.WriteLine("XXXXXXXXXX    XXXXX  ");
+Console.WriteLine("XXXXXXXXXX XXXXXXXXXX");
+Console.WriteLine("XXXXXXXXXXXXXXXXXXXXX");
+Console.WriteLine("XXXXXXXXXXXXXXXXXXXXX");
+Console.WriteLine("  XXXXXXXXXXXXXXXXXX ");
+Console.WriteLine("   XXXXXXXXXXXXXXX   ");
+Console.WriteLine("     XXXXXXXXXXXX    ");
+Console.WriteLine("       XXXXXXXX      ");
+Console.WriteLine("        XXXXX        ");
+            Console.WriteLine("          XX         ");
         }
 
         private void NewMerch()
