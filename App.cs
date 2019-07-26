@@ -11,7 +11,8 @@ namespace Inventory
 
         public void Run()
         {
-            while (true)
+            bool exit = false;
+            while (!exit)
             {
                 switch (_currentPage)
                 {
@@ -29,6 +30,9 @@ namespace Inventory
 
                     case Page.CheckMerch:
                         CheckMerch();
+                        break;
+                    case Page.Exit:
+                        exit = true;
                         break;
                 }
             }

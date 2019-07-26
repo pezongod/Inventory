@@ -45,7 +45,7 @@ namespace Inventory
                         BildId = GetInt(reader.GetSqlInt32(9))
                     };
 
-                    DateTime?  d = GetDateTime(reader["DatumInköpt"]);
+                    DateTime? d = GetDateTime(reader["DatumInköpt"]);
 
                     list.Add(vara);
                 }
