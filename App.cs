@@ -158,8 +158,8 @@ namespace Inventory
                         break;
 
                     case Page.AddDate:
-                        bool parsedatetry;
-                        DateTime datum = '0000-00-00';
+                        bool parsedatetry = false;
+                        DateTime datum = DateTime.Parse("0000-00-00");
                         while (!parsedatetry)
                         {
                             Console.Clear();
