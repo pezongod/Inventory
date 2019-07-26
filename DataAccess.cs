@@ -16,7 +16,7 @@ namespace Inventory
                         from Subtyp
                         join Vara on Subtyp.Id = Vara.SubTypId
                         join Typ on Subtyp.TypId = Typ.Id
-                        join Status on Status.Id = Vara.StatusId
+                        left join Status on Status.Id = Vara.StatusId
                         WHERE Typ.Id = @id";
 
             using (SqlConnection connection = new SqlConnection(conString))
@@ -45,7 +45,7 @@ namespace Inventory
                         BildId = GetInt(reader.GetSqlInt32(9))
                     };
 
-                    GetDateTime(reader, vara);
+                    DateTime?  d = GetDateTime(reader["DatumInköpt"]);
 
                     list.Add(vara);
                 }
@@ -53,6 +53,7 @@ namespace Inventory
                 return list;
             }
         }
+
 
         private int? GetInt(SqlInt32 x)
         {
@@ -78,12 +79,15 @@ namespace Inventory
             }
         }
 
-        private void GetDateTime(SqlDataReader reader, Vara vara)
+
+        private DateTime? GetDateTime(object x)
         {
-            var x = reader["DatumInköpt"];
             if (!(x is DBNull))
-                vara.DatumInköpt = (DateTime)x;
+                return (DateTime)x;
+
+            return null;
         }
+
 
         public List<IEntity> GetAllTyps()
         {
